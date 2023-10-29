@@ -1,16 +1,13 @@
-package Commands.Item;
+package Commands.Items;
 
 public abstract class Item implements Comparable {
     private String name;
     private double price;
     private boolean sold;
     private int ID;
-    private int itemSpecies;
-
     public Item(String itemName) {
         this.name = itemName;
         this.sold = false;
-        this.itemSpecies = 0;
     }
 
     public Item(String itemName, double itemPrice, int id) {
@@ -18,7 +15,6 @@ public abstract class Item implements Comparable {
         this.price = itemPrice;
         this.sold = false;
         this.ID = id;
-        this.itemSpecies = 0;
     }
 
     public String getName() {
@@ -70,11 +66,8 @@ public abstract class Item implements Comparable {
         return null;
     }
 
-    public int getItemSpecies() {
-        return itemSpecies;
-    }
-
-    public void setItemSpecies(int itemSpecies) {
-        this.itemSpecies = itemSpecies;
+    @Override
+    public String toString() {
+        return "Item Name: " + getName() + "\nItem Price: " + getPrice() + "\nSold: " + isSold();
     }
 }

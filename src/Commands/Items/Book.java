@@ -9,22 +9,16 @@ package Commands.Items;
  * @author skalg
  */
 
-public class Book {
-    private final String itemName;
+public class Book extends Item {
+    private String itemName;
     private double itemPrice;
     private int pages;
     private int bookID;
     private boolean status;
-
-    /**
-     *
-     * @param itemName the item's name
-     * @param status whether it has been sold
-     */
-    public Book(String itemName, boolean status)
+    public Book(String itemName)
     {
-        this.itemName = itemName;
-        this.status = status;
+        super(itemName);
+        this.status = false;
     }
 
     /**
@@ -33,14 +27,11 @@ public class Book {
      * @param itemPrice the item's price
      * @param pages amount of pages
      * @param bookID the ID for the item (ex: 0)
-     * @param status whether it has been sold
      */
-    public Book(String itemName, double itemPrice, int pages, int bookID, boolean status) {
-        this.itemName = itemName;
-        this.itemPrice = itemPrice;
+    public Book(String itemName, double itemPrice, int pages, int bookID) {
+        super(itemName,itemPrice,bookID);
         this.pages = pages;
-        this.bookID = bookID;
-        this.status = status;
+        this.status = false;
     }
 
     /**
@@ -73,7 +64,7 @@ public class Book {
      */
     @Override
     public String toString() {
-        return "Name: " + getItemName() + "\nPrice: " + getItemPrice() + "\nPage Count: " + getPages();
+        return super.toString() + "Pages: " + getPages();
     }
 
     /**

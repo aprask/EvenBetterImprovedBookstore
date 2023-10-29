@@ -8,8 +8,8 @@ package Commands.Items;
  *
  * @author skalg
  */ 
-public class DVD {
-    private final String itemName;
+public class DVD extends Item{
+    private String itemName;
     private double itemPrice;
     private double dvdLength;
     private int dvdID;
@@ -18,12 +18,11 @@ public class DVD {
     /**
      *
      * @param itemName the item's name
-     * @param status the item's status
      */
-    public DVD(String itemName, boolean status)
+    public DVD(String itemName)
     {
-        this.itemName = itemName;
-        this.status = status;
+        super(itemName);
+        this.status = false;
     }
     /**
      *
@@ -31,14 +30,11 @@ public class DVD {
      * @param itemPrice the item's price
      * @param dvdLength the cd's length
      * @param dvdID the ID for the item (ex: 0)
-     * @param status whether it has been sold
      */
-    public DVD(String itemName, double itemPrice, double dvdLength, int dvdID, boolean status) {
-        this.itemName = itemName;
-        this.itemPrice = itemPrice;
+    public DVD(String itemName, double itemPrice, double dvdLength, int dvdID) {
+        super(itemName,itemPrice,dvdID);
         this.dvdLength = dvdLength;
-        this.dvdID = dvdID;
-        this.status = status;
+        this.status = false;
     }
 
     /**
@@ -70,9 +66,8 @@ public class DVD {
      */
     @Override
     public String toString() {
-        return "Name: " + getItemName() + "\nPrice: " + getItemPrice() + "\nDVD Length: " + getDvdLength();
+        return super.toString() + "Length: " + getDvdLength();
     }
-
     /**
      *
      * @return return the dvd's ID

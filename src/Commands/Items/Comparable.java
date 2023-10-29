@@ -1,4 +1,4 @@
-package Commands.Item;
+package Commands.Items;
 
 public interface Comparable
 {

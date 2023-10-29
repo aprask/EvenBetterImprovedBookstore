@@ -8,8 +8,8 @@ package Commands.Items;
  *
  * @author skalg
  */
-public class CD {
-    private final String itemName;
+public class CD extends Item {
+    private String itemName;
     private double itemPrice;
     private double cdLength;
     private int cdID;
@@ -22,8 +22,8 @@ public class CD {
      */
     public CD(String itemName, boolean status)
     {
-        this.itemName = itemName;
-        this.status = status;
+        super(itemName);
+        this.status = false;
     }
 
     /**
@@ -32,14 +32,11 @@ public class CD {
      * @param itemPrice the item's price
      * @param cdLength the cd's length
      * @param cdID the ID for the item (ex: 0)
-     * @param status whether it has been sold
      */
-    public CD(String itemName, double itemPrice, double cdLength, int cdID, boolean status) {
-        this.itemName = itemName;
-        this.itemPrice = itemPrice;
+    public CD(String itemName, double itemPrice, double cdLength, int cdID) {
+        super(itemName,itemPrice,cdID);
         this.cdLength = cdLength;
-        this.cdID = cdID;
-        this.status = status;
+        this.status = false;
     }
 
     /**
@@ -72,8 +69,8 @@ public class CD {
      */
     @Override
     public String toString() {
-        return "Name: " + getItemName() + "\nPrice: " + getItemPrice() + "\nCD Length: " + getCdLength();
-     }
+        return super.toString() + "Length: " + getCdLength();
+    }
 
     /**
      *

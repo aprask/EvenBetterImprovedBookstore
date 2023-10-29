@@ -64,7 +64,7 @@ public class Store {
                     this.register.proceedWithOrder();
                     double amountSpent = this.inventory.getBookPrice(selectedBookID);
                     this.register.handleBankInteraction(amountSpent, this.register.enter.getClient());
-                    this.inventory.removeBook(selectedBookID);
+                    this.inventory.sellBook(selectedBookID);
                 }
             }
             case 2 -> {
@@ -81,7 +81,7 @@ public class Store {
                     this.register.proceedWithOrder();
                     double amountSpent = this.inventory.getCDPrice(selectedCDID);
                     this.register.handleBankInteraction(amountSpent, this.register.enter.getClient());
-                    this.inventory.removeCD(selectedCDID);
+                    this.inventory.sellCD(selectedCDID);
                 }
             }
             case 3 -> {
@@ -97,7 +97,7 @@ public class Store {
                     this.register.proceedWithOrder();
                     double amountSpent = this.inventory.getDVDPrice(selectedDVDID);
                     this.register.handleBankInteraction(amountSpent, this.register.enter.getClient());
-                    this.inventory.removeDVD(selectedDVDID);
+                    this.inventory.sellDVD(selectedDVDID);
                 }
             }
             default -> System.out.println("Error");
