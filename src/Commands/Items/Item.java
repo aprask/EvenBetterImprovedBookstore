@@ -3,17 +3,14 @@ package Commands.Items;
 public abstract class Item implements Comparable {
     private String name;
     private double price;
-    private boolean sold;
     private int ID;
     public Item(String itemName) {
         this.name = itemName;
-        this.sold = false;
     }
 
     public Item(String itemName, double itemPrice, int id) {
         this.name = itemName;
         this.price = itemPrice;
-        this.sold = false;
         this.ID = id;
     }
 
@@ -31,14 +28,6 @@ public abstract class Item implements Comparable {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public boolean isSold() {
-        return sold;
-    }
-
-    public void setSold(boolean sold) {
-        this.sold = sold;
     }
 
     public int getID() {
@@ -68,6 +57,6 @@ public abstract class Item implements Comparable {
 
     @Override
     public String toString() {
-        return "Item Name: " + getName() + "\nItem Price: " + getPrice() + "\nSold: " + isSold();
+        return "Item Name: " + getName() + "\nItem Price: " + getPrice();
     }
 }

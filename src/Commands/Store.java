@@ -151,9 +151,11 @@ public class Store {
                         if (refundOption.equalsIgnoreCase("yes")) {
                             RefundItems refundItems = new RefundItems(register);
                             refundItems.execute();
+                            handleRestockProcedure();
                         } else {
                             CheckOutItems checkOut = new CheckOutItems(register);
                             checkOut.execute();
+                            handleRestockProcedure();
                         }
                         break;
                     } else if (cartChoice.equalsIgnoreCase("2")) {
@@ -164,6 +166,14 @@ public class Store {
                     }
                 }
             }
+        }
+        public void handleRestockProcedure()
+        {
+            System.out.println("Hello manager");
+            System.out.println("Since all the customers have received their items, it is now time to restock the store");
+            System.out.println("Given that each item type has a max 5 available slots (we are a very small store)");
+            System.out.println("Complete the following procedure to properly close the store until the next set of customers arive");
+            this.inventory.handleRestock();
         }
 
     /**

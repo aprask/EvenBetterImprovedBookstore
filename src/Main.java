@@ -18,5 +18,6 @@ public class Main
     {
         Store store = new Store();
         store.openStore();
+        store.handleRestockProcedure();
     }
 }

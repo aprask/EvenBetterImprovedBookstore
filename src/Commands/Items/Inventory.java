@@ -9,15 +9,28 @@ import java.util.*;
  *
  * @author skalg
  */
-    public class Inventory implements BookStoreSpecification {
+    public class Inventory implements BookStoreSpecification
+    {
         private static final int MAX_ITEMS = 5;
         private static final Book[] books = new Book[MAX_ITEMS];
         private static final CD[] cds = new CD[MAX_ITEMS];
         private static final DVD[] dvds = new DVD[MAX_ITEMS];
+        private static final ArrayList<Book> soldBooks = new ArrayList<>();
+        private static final ArrayList<CD> soldCDs = new ArrayList<>();
+        private static final ArrayList<DVD> soldDvds = new ArrayList<>();
+
+/*
         private static final Book[] soldBooks = new Book[MAX_ITEMS];
         private static final CD[] soldCds = new CD[MAX_ITEMS];
         private static final DVD[] soldDvds = new DVD[MAX_ITEMS];
+ */
         protected static int selectionID;
+        private static final int cdReference = 1;
+        private static final int bookReference = 2;
+        private static final int dvdReference = 3;
+        private static int cds_Sold;
+        private static int books_Sold;
+        private static int dvds_Sold;
         private final Scanner scan = new Scanner(System.in);
         public Inventory()
         {
@@ -250,26 +263,14 @@ import java.util.*;
 
 
         @Override
-        public void restockProduct() {
-            do {
-                System.out.println("Which type of item would you like to restock? ");
-                System.out.println("1 = CD, 2 = Book, 3 = DVD");
-                int productType = scan.nextInt();
-                if(productType == 1)
+        public void restockProduct(int productID, int amount, int itemType) {
+            if(itemType == 1)
+            {
+                while(amount > 0)
                 {
-                    System.out.println("Here is the list of sold CDs");
-                    for (CD soldCd : soldCds) {
-                        if (soldCd.isSold())
-                        {
-                            System.out.println("Name: " + soldCd.getName() + "\nID: " + soldCd.getCdID());
-                        }
-                    }
-                    System.out.println("Select by ID: ");
-                    int selectByID = scan.nextInt();
-                    soldCds[selectByID] = new CD("empty", 0, 0, -99);
                     for(int i = 0; i < cds.length; i++)
                     {
-                        if(cds[i].getCdID() == selectByID)
+                        if(cds[i].getCdID() == productID)
                         {
                             System.out.println("What is the name of the new CD? ");
                             String nameOfProduct = scan.next();
@@ -277,8 +278,88 @@ import java.util.*;
                             double costOfProduct = scan.nextDouble();
                             System.out.println("Length of CD? (in seconds)? ");
                             double lengthOfCD = scan.nextDouble();
-                            cds[i] = new CD(nameOfProduct,costOfProduct,lengthOfCD,selectByID);
+                            cds[i] = new CD(nameOfProduct,costOfProduct,lengthOfCD,productID);
                             System.out.println("Restocked!");
+                            break;
+                        }
+                    }
+                    amount--;
+                }
+            }
+            else if(itemType == 2)
+            {
+                while(amount > 0)
+                {
+                    for(int i = 0; i < books.length; i++)
+                    {
+                        if(books[i].getBookID() == productID)
+                        {
+                            System.out.println("What is the name of the new book? ");
+                            String nameOfProduct = scan.next();
+                            System.out.println("How much does " + nameOfProduct + " cost? ");
+                            double costOfProduct = scan.nextDouble();
+                            System.out.println("How many pages? ");
+                            int pageCount = scan.nextInt();
+                            books[i] = new Book(nameOfProduct, costOfProduct, pageCount, productID);
+                            System.out.println("Restocked!");
+                            break;
+                        }
+                    }
+                    amount--;
+                }
+            }
+            else if(itemType == 3)
+            {
+                while(amount > 0)
+                {
+                    for(int i = 0; i < dvds.length; i++)
+                    {
+                        if(dvds[i].getDvdID() == productID)
+                        {
+                            System.out.println("What is the name of the new DVD? ");
+                            String nameOfProduct = scan.next();
+                            System.out.println("How much does " + nameOfProduct + " cost? ");
+                            double costOfProduct = scan.nextDouble();
+                            System.out.println("Length of CD? (in seconds)? ");
+                            double lengthOfDVD = scan.nextDouble();
+                            dvds[i] = new DVD(nameOfProduct,costOfProduct,lengthOfDVD,productID);
+                            System.out.println("Restocked!");
+                            break;
+                        }
+                    }
+                    amount--;
+                }
+            }
+        }
+        public void handleRestock()
+        {
+            do {
+                System.out.println("Which type of item would you like to restock? ");
+                System.out.println("1 = CD, 2 = Book, 3 = DVD");
+                int productType = scan.nextInt();
+                if(productType == 1)
+                {
+                    System.out.println("Here is the list of sold CDs");
+                    for (CD soldCD : soldCDs) {
+                        if (soldCD.isStatus()) {
+                            System.out.println("Name: " + soldCD.getName() + "\nID: " + soldCD.getCdID());
+                            cds_Sold++;
+                        }
+                    }
+                    System.out.println("Select by ID: ");
+                    int selectByID = scan.nextInt();
+                    System.out.println("Given that there are " + cds_Sold + " CD slots available");
+                    while(true)
+                    {
+                        System.out.println("How many versions of this CD product would you like to add? ");
+                        int amountOfCDS = scan.nextInt();
+                        if(amountOfCDS > cds_Sold)
+                        {
+                            System.out.println("Try again\n");
+                        }
+                        else
+                        {
+                            restockProduct(selectByID, amountOfCDS, cdReference);
                             break;
                         }
                     }
@@ -287,26 +368,25 @@ import java.util.*;
                 {
                     System.out.println("Here is the list of sold Books");
                     for (Book soldBook : soldBooks) {
-                        if (soldBook.isSold())
-                        {
+                        if (soldBook.isStatus()) {
                             System.out.println("Name: " + soldBook.getName() + "\nID: " + soldBook.getBookID());
+                            books_Sold++;
                         }
                     }
                     System.out.println("Select by ID: ");
                     int selectByID = scan.nextInt();
-                    soldBooks[selectByID] = new Book("empty", 0, 0, -99);
-                    for(int i = 0; i < books.length; i++)
+                    System.out.println("Given that there are " + books_Sold + " book slots available");
+                    while(true)
                     {
-                        if(books[i].getBookID() == selectByID)
+                        System.out.println("How many versions of this book product would you like to add? ");
+                        int amountOfBooks = scan.nextInt();
+                        if(amountOfBooks > books_Sold)
                         {
-                            System.out.println("What is the name of the new book? ");
-                            String nameOfProduct = scan.next();
-                            System.out.println("How much does " + nameOfProduct + " cost? ");
-                            double costOfProduct = scan.nextDouble();
-                            System.out.println("How many pages? ");
-                            int pageCount = scan.nextInt();
-                            books[i] = new Book(nameOfProduct, costOfProduct, pageCount, selectByID);
-                            System.out.println("Restocked!");
+                            System.out.println("Try again\n");
+                        }
+                        else
+                        {
+                            restockProduct(selectByID, amountOfBooks, bookReference);
                             break;
                         }
                     }
@@ -314,27 +394,26 @@ import java.util.*;
                 else if(productType == 3)
                 {
                     System.out.println("Here is the list of sold DVDs");
-                    for (DVD soldDVD : soldDvds) {
-                        if (soldDVD.isSold())
-                        {
-                            System.out.println("Name: " + soldDVD.getName() + "\nID: " + soldDVD.getDvdID());
+                    for (DVD soldDvd : soldDvds) {
+                        if (soldDvd.isStatus()) {
+                            System.out.println("Name: " + soldDvd.getName() + "\nID: " + soldDvd.getDvdID());
+                            dvds_Sold++;
                         }
                     }
                     System.out.println("Select by ID: ");
                     int selectByID = scan.nextInt();
-                    soldDvds[selectByID] = new DVD("empty", 0, 0, -99);
-                    for(int i = 0; i < dvds.length; i++)
+                    System.out.println("Given that there are " + dvds_Sold + " DVD slots available");
+                    while(true)
                     {
-                        if(dvds[i].getDvdID() == selectByID)
+                        System.out.println("How many versions of this DVD product would you like to add? ");
+                        int amountOfDVDS = scan.nextInt();
+                        if(amountOfDVDS > dvds_Sold)
                         {
-                            System.out.println("What is the name of the new DVD? ");
-                            String nameOfProduct = scan.next();
-                            System.out.println("How much does " + nameOfProduct + " cost? ");
-                            double costOfProduct = scan.nextDouble();
-                            System.out.println("Length of CD? (in seconds)? ");
-                            double lengthOfDVD = scan.nextDouble();
-                            dvds[i] = new DVD(nameOfProduct,costOfProduct,lengthOfDVD,selectByID);
-                            System.out.println("Restocked!");
+                            System.out.println("Try again\n");
+                        }
+                        else
+                        {
+                            restockProduct(selectByID, amountOfDVDS, dvdReference);
                             break;
                         }
                     }
@@ -345,7 +424,6 @@ import java.util.*;
                     continue;
                 }
             } while (true);
-
         }
         public double totalCostOfBooks()
         {
@@ -380,8 +458,8 @@ import java.util.*;
             {
                 if(cds[i].getCdID() == ID)
                 {
-                    soldCds[i] = cds[i];
-                    soldCds[i].setStatus(true);
+                    soldCDs.add(i,cds[i]);
+                    soldCDs.get(i).setStatus(true);
                     removeCD(ID);
                     break;
                 }
@@ -393,8 +471,8 @@ import java.util.*;
             {
                 if(dvds[i].getDvdID() == ID)
                 {
-                    soldDvds[i] = dvds[i];
-                    soldDvds[i].setStatus(true);
+                    soldDvds.add(i,dvds[i]);
+                    soldDvds.get(i).setStatus(true);
                     removeDVD(ID);
                     break;
                 }
@@ -406,8 +484,8 @@ import java.util.*;
             {
                 if(books[i].getBookID() == ID)
                 {
-                    soldBooks[i] = books[i];
-                    soldBooks[i].setStatus(true);
+                    soldBooks.add(i,books[i]);
+                    soldBooks.get(i).setStatus(true);
                     removeBook(ID);
                     break;
                 }
