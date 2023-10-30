@@ -24,6 +24,12 @@ public class DVD extends Item{
         super(itemName);
         this.status = false;
     }
+    public DVD(String itemName, double itemPrice)
+    {
+        super(itemName, itemPrice);
+        this.status = false;
+    }
+
     /**
      *
      * @param itemName the item's name

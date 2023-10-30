@@ -18,11 +18,15 @@ public class CD extends Item {
     /**
      *
      * @param itemName the item's name
-     * @param status the item's status
      */
-    public CD(String itemName, boolean status)
+    public CD(String itemName)
     {
         super(itemName);
+        this.status = false;
+    }
+    public CD(String itemName, double itemPrice)
+    {
+        super(itemName, itemPrice);
         this.status = false;
     }
 

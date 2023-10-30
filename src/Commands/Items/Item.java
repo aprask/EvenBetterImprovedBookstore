@@ -1,11 +1,16 @@
 package Commands.Items;
 
-public abstract class Item implements Comparable {
+public class Item implements Comparable {
     private String name;
     private double price;
     private int ID;
     public Item(String itemName) {
         this.name = itemName;
+    }
+    public Item(String itemName, double itemPrice)
+    {
+        this.name = itemName;
+        this.price = itemPrice;
     }
 
     public Item(String itemName, double itemPrice, int id) {

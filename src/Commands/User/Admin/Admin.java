@@ -10,7 +10,7 @@ public class Admin {
         scanner = new Scanner(System.in);
     }
 
-    public void enterPassword()
+    public boolean didPass()
     {
         int attempts = 5;
         while (attempts > 0) {
@@ -19,12 +19,13 @@ public class Admin {
             String passwordAttempt = scanner.next();
             if (passwordAttempt.equals(ADMIN_PASSWORD)) {
                 System.out.println("You have successfully opened the store!");
-                return;
+                return true;
             } else {
                 System.out.println("Incorrect Password");
                 attempts--;
             }
         }
         System.out.println("You've run out of attempts. Access denied.");
+        return false;
     }
 }
