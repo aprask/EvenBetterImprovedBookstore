@@ -4,6 +4,8 @@
  */
 package Commands.Items;
 
+import Commands.Items.Factory.Factory;
+
 import java.util.*;
 /**
  *
@@ -11,6 +13,7 @@ import java.util.*;
  */
     public class Inventory implements BookStoreSpecification {
     private static final ArrayList<Book> inStockBooks = new ArrayList<>();
+    private Factory factory = new Factory();
     private static final ArrayList<CD> inStockCDS = new ArrayList<>();
     private static final ArrayList<DVD> inStockDVDS = new ArrayList<>();
     private static final ArrayList<Book> soldBooks = new ArrayList<>();
@@ -32,42 +35,53 @@ import java.util.*;
     private final Scanner scan = new Scanner(System.in);
 
     public Inventory() {
-        initializeItems();
+
     }
 
     public void initializeItems() {
-        Book narnia = new Book("Narnia", 15.99, 300, 0);
-        inStockBooks.add(narnia);
-        Book theLordOfTheRings = new Book("The Lord of the Rings", 5.00, 1000, 1);
-        inStockBooks.add(theLordOfTheRings);
-        Book animalFarm = new Book("Animal Farm", 5.00, 250, 2);
-        inStockBooks.add(animalFarm);
-        Book theIliad = new Book("The Iliad", 40.25, 8000, 3);
-        inStockBooks.add(theIliad);
-        Book nineteenEightyFour = new Book("1984", 10.50, 95, 4);
-        inStockBooks.add(nineteenEightyFour);
+        System.out.println("Hello manager!\n");
+        System.out.println("Would you like to create custom items? ");
+        System.out.println("\"Yes\" for custom items");
+        System.out.println("\"No\" for default items");
+        String stockOrCustom = scan.next();
+        if (stockOrCustom.equalsIgnoreCase("yes")) {
+            this.factory.constructItem();
+        }
+        else
+        {
+            Book narnia = new Book("Narnia", 15.99, 300, 0);
+            inStockBooks.add(narnia);
+            Book theLordOfTheRings = new Book("The Lord of the Rings", 5.00, 1000, 1);
+            inStockBooks.add(theLordOfTheRings);
+            Book animalFarm = new Book("Animal Farm", 5.00, 250, 2);
+            inStockBooks.add(animalFarm);
+            Book theIliad = new Book("The Iliad", 40.25, 8000, 3);
+            inStockBooks.add(theIliad);
+            Book nineteenEightyFour = new Book("1984", 10.50, 95, 4);
+            inStockBooks.add(nineteenEightyFour);
 
-        CD thriller = new CD("Thriller", 8.95, 250, 0);
-        inStockCDS.add(thriller);
-        CD hotelCalifornia = new CD("Hotel California", 6.95, 100, 1);
-        inStockCDS.add(hotelCalifornia);
-        CD backInBlack = new CD("Back in Black", 5.50, 150, 2);
-        inStockCDS.add(backInBlack);
-        CD thePlanets = new CD("The Planets", 150.75, 5000, 3);
-        inStockCDS.add(thePlanets);
-        CD rideOfTheValkyries = new CD("Ride of the Valkyries", 250.25, 250, 4);
-        inStockCDS.add(rideOfTheValkyries);
+            CD thriller = new CD("Thriller", 8.95, 250, 0);
+            inStockCDS.add(thriller);
+            CD hotelCalifornia = new CD("Hotel California", 6.95, 100, 1);
+            inStockCDS.add(hotelCalifornia);
+            CD backInBlack = new CD("Back in Black", 5.50, 150, 2);
+            inStockCDS.add(backInBlack);
+            CD thePlanets = new CD("The Planets", 150.75, 5000, 3);
+            inStockCDS.add(thePlanets);
+            CD rideOfTheValkyries = new CD("Ride of the Valkyries", 250.25, 250, 4);
+            inStockCDS.add(rideOfTheValkyries);
 
-        DVD starWars = new DVD("Star Wars", 9.15, 600, 0);
-        inStockDVDS.add(starWars);
-        DVD theTerminator = new DVD("The Terminator", 10.55, 550, 1);
-        inStockDVDS.add(theTerminator);
-        DVD starTrek = new DVD("Star Trek", 10.75, 1000, 2);
-        inStockDVDS.add(starTrek);
-        DVD theGodfather = new DVD("The Godfather", 25.25, 1025, 3);
-        inStockDVDS.add(theGodfather);
-        DVD theSopranos = new DVD("The Sopranos", 12.55, 1202, 4);
-        inStockDVDS.add(theSopranos);
+            DVD starWars = new DVD("Star Wars", 9.15, 600, 0);
+            inStockDVDS.add(starWars);
+            DVD theTerminator = new DVD("The Terminator", 10.55, 550, 1);
+            inStockDVDS.add(theTerminator);
+            DVD starTrek = new DVD("Star Trek", 10.75, 1000, 2);
+            inStockDVDS.add(starTrek);
+            DVD theGodfather = new DVD("The Godfather", 25.25, 1025, 3);
+            inStockDVDS.add(theGodfather);
+            DVD theSopranos = new DVD("The Sopranos", 12.55, 1202, 4);
+            inStockDVDS.add(theSopranos);
+        }
     }
 
     /**
@@ -153,59 +167,6 @@ import java.util.*;
         System.out.println("******************************************************************");
         System.out.println();
     }
-
-    /**
-     *
-     * @return menu of items used in Store.java
-     */
-
-        /*
-                @Override
-        public String toString() {
-            int var = getSelectionID();
-            if(var == 1)
-            {
-                return
-                        books[0].getItemName() + ": " + books[0].getBookID() +
-                                "\n" +
-                        books[1].getItemName() + ": " + books[1].getBookID() +
-                                "\n" +
-                        books[2].getItemName() + ": " + books[2].getBookID() +
-                                "\n" +
-                        books[3].getItemName() + ": " + books[3].getBookID() +
-                                "\n" +
-                        books[4].getItemName() + ": " + books[4].getBookID();
-            }
-            else if(var == 2)
-            {
-               return
-                       cds[0].getItemName() + ": " + cds[0].getCdID() +
-                               "\n" +
-                       cds[1].getItemName() + ": " + cds[1].getCdID() +
-                               "\n" +
-                       cds[2].getItemName() + ": " + cds[2].getCdID() +
-                               "\n" +
-                       cds[3].getItemName() + ": " + cds[3].getCdID() +
-                               "\n" +
-                       cds[4].getItemName() + ": " + cds[4].getCdID();
-            }
-            else if(var == 3)
-            {
-                return
-                        dvds[0].getItemName() + ": " + dvds[0].getDvdID() +
-                                "\n" +
-                        dvds[1].getItemName() + ": " + dvds[1].getDvdID() +
-                                "\n" +
-                        dvds[2].getItemName() + ": " + dvds[2].getDvdID() +
-                                "\n" +
-                        dvds[3].getItemName() + ": " + dvds[3].getDvdID() +
-                                "\n" +
-                        dvds[4].getItemName() + ": " + dvds[4].getDvdID();
-            }
-            else return null;
-        }
-         */
-
     /**
      * @return return the ID selected
      */
@@ -440,7 +401,21 @@ import java.util.*;
         }
     }
 
-    public void addCD(String name, ) {
+    public void addCD(String itemName, double itemPrice, double cdLength, int cdID) {
+        inStockCDS.add(new CD(itemName,itemPrice,cdLength,cdID));
+    }
+    public void addBook(String itemName, double itemPrice, int pages, int bookID) {
+        inStockBooks.add(new Book(itemName,itemPrice,pages,bookID));
+    }
+    public void addDVD(String itemName, double itemPrice, double dvdLength, int cdID) {
+        inStockDVDS.add(new DVD(itemName,itemPrice,dvdLength,cdID));
+    }
 
+    public Factory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(Factory factory) {
+        this.factory = factory;
     }
 }

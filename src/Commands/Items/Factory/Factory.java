@@ -1,6 +1,5 @@
 package Commands.Items.Factory;
 
-import Commands.Item.*;
 import Commands.Items.Inventory;
 import Commands.User.Admin.Admin;
 
@@ -13,11 +12,10 @@ public class Factory
 {
     private final Scanner scan = new Scanner(System.in);
     private static final Inventory inventory = new Inventory();
-    private static final StoreItems storeItems = new StoreItems();
     private ItemType CD = ItemType.CD;
     private ItemType Book = ItemType.BOOK;
     private ItemType DVD = ItemType.DVD;
-    private static final ArrayList<Item> itemHistory = new ArrayList<>();
+    protected static final ArrayList<Item> itemHistory = new ArrayList<>();
     private final Admin admin = new Admin();
     public Factory()
     {
@@ -38,7 +36,7 @@ public class Factory
                 newItemType = scan.nextInt();
                 if(newItemType == -1)
                 {
-                    storeItems.execute();
+                    System.out.println("Total Number of Items + " + this.getItemHistorySize());
                     break;
                 }
             }
@@ -59,21 +57,21 @@ public class Factory
             {
                 System.out.println("Enter the CD's length in seconds: ");
                 double cdLength = scan.nextDouble();
-                inventory.addCD();
+                inventory.addCD(itemName,itemPrice,cdLength, itemID);
                 return true;
             }
             else if(itemType == getBook().ID)
             {
                 System.out.println("Enter the page count: ");
                 int pageCount = scan.nextInt();
-                inventory.addItem(new Book(itemName,itemPrice,itemID,pageCount, Book.ID)); // TODO Transfer to inventory
+                inventory.addBook(itemName,itemPrice,pageCount, itemID);
                 return true;
             }
             else if(itemType == getDVD().ID)
             {
                 System.out.println("Enter the DVD's length in seconds: ");
                 double dvdLength = scan.nextDouble();
-                inventory.addItem(new CD(itemName,itemPrice,itemID,dvdLength, DVD.ID));
+                inventory.addDVD(itemName,itemPrice,dvdLength,itemID);
                 return true;
             }
         }

@@ -20,6 +20,10 @@ public class Store {
     private ArrayList<Integer> dvdIDHistory = new ArrayList<>();
     private ArrayList<Integer> cdIDHistory = new ArrayList<>();
     private ArrayList<Integer> bookIDHistory = new ArrayList<>();
+    public void prepareStore()
+    {
+        this.inventory.initializeItems();
+    }
     public void openStore() {
         bookLogo();
         System.out.println("Welcome to the book store!");
@@ -52,7 +56,7 @@ public class Store {
         switch (this.inventory.getSelectionID()) {
             case 1 -> {
                 System.out.println("Which Book? Select by ID ");
-                System.out.println(inventory);
+                System.out.println(inventory); // TODO MENU
                 int selectedBookID = scan.nextInt();
                 if(!this.bookIDHistory.contains(selectedBookID))
                 {

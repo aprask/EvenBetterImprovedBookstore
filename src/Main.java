@@ -17,7 +17,14 @@ public class Main
     public static void main(String[] args)
     {
         Store store = new Store();
+        store.prepareStore();
         store.openStore();
         store.handleRestockProcedure();
     }
 }
+
+/*
+TODO
+    1) Fix Menu (null...?)
+    2) Fix Checkout
+ */
