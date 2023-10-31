@@ -6,8 +6,6 @@ import Commands.User.Admin.Admin;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Commands.Items.*;
-
-
 public class Factory
 {
     private final Scanner scan = new Scanner(System.in);

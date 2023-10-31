@@ -18,5 +18,5 @@ public class Main
 
 /*
 TODO
-    2) Fix Checkout
+    Fix Restock Function
  */

@@ -56,7 +56,7 @@ public class Store {
         switch (this.inventory.getSelectionID()) {
             case 1 -> {
                 System.out.println("Which Book? Select by ID ");
-                System.out.println(inventory); // TODO MENU
+                this.inventory.availableBooks();
                 int selectedBookID = scan.nextInt();
                 if(!this.bookIDHistory.contains(selectedBookID))
                 {
@@ -73,7 +73,7 @@ public class Store {
             }
             case 2 -> {
                 System.out.println("Which CD? Select by ID ");
-                System.out.println(inventory);
+                this.inventory.availableCDs();
                 int selectedCDID = scan.nextInt();
                 if(!this.cdIDHistory.contains(selectedCDID))
                 {
@@ -90,7 +90,7 @@ public class Store {
             }
             case 3 -> {
                 System.out.println("Which DVD? Select by ID ");
-                System.out.println(inventory);
+                this.inventory.availableDVDs();
                 int selectedDVDID = scan.nextInt();
                 if(!this.dvdIDHistory.contains(selectedDVDID))
                 {
@@ -173,10 +173,9 @@ public class Store {
         }
         public void handleRestockProcedure()
         {
-            System.out.println("Hello manager");
+            System.out.println("\nHello manager");
             System.out.println("Since all the customers have received their items, it is now time to restock the store");
-            System.out.println("Given that each item type has a max 5 available slots (we are a very small store)");
-            System.out.println("Complete the following procedure to properly close the store until the next set of customers arive");
+            System.out.println("Complete the following procedure to properly close the store until the next set of customers arrive\n");
             this.inventory.handleRestock();
         }
 
