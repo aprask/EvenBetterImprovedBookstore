@@ -1,6 +1,6 @@
 package Commands.Items;
 
-public class Item implements Comparable {
+public abstract class Item implements Comparable {
     private String name;
     private double price;
     private int ID;

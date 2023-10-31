@@ -40,22 +40,6 @@ public class Book extends Item {
 
     /**
      *
-     * @return the item's name
-     */
-    public String getItemName() {
-        return itemName;
-    }
-
-    /**
-     *
-     * @return the item's price
-     */
-    public double getItemPrice() {
-        return itemPrice;
-    }
-
-    /**
-     *
      * @return the item's page count
      */
     public int getPages() {

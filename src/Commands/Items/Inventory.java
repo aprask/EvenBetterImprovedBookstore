@@ -19,12 +19,9 @@ import java.util.*;
     private static final ArrayList<Book> soldBooks = new ArrayList<>();
     private static final ArrayList<CD> soldCDs = new ArrayList<>();
     private static final ArrayList<DVD> soldDvds = new ArrayList<>();
-
-    /*
-            private static final Book[] soldBooks = new Book[MAX_ITEMS];
-            private static final CD[] soldCds = new CD[MAX_ITEMS];
-            private static final DVD[] soldDvds = new DVD[MAX_ITEMS];
-     */
+    private DVD dvd;
+    private CD cd;
+    private Book book;
     protected static int selectionID;
     private static final int cdReference = 1;
     private static final int bookReference = 2;
@@ -126,12 +123,12 @@ import java.util.*;
     public void availableBooks() {
         System.out.println("******************************************************************");
         System.out.println("Available Books: ");
-        for (int i = 0; i < inStockBooks.size(); i++) {
-            if (inStockBooks.get(i) != null) {
+        for (Book inStockBook : inStockBooks) {
+            if (inStockBook.getName() != null) {
                 System.out.println();
-                System.out.println("Name: " + inStockBooks.get(i).getItemName());
-                System.out.println("Price: $" + inStockBooks.get(i).getItemPrice());
-                System.out.println("Pages: " + inStockBooks.get(i).getPages());
+                System.out.println("Name: " + inStockBook.getName());
+                System.out.println("Price: $" + inStockBook.getPrice());
+                System.out.println("Pages: " + inStockBook.getPages());
             }
         }
         System.out.println("******************************************************************");
@@ -141,12 +138,12 @@ import java.util.*;
     public void availableCDs() {
         System.out.println("******************************************************************");
         System.out.println("Available CDs: ");
-        for (int i = 0; i < inStockCDS.size(); i++) {
-            if (inStockCDS.get(i) != null) {
+        for (CD inStockCD : inStockCDS) {
+            if (inStockCD.getName() != null) {
                 System.out.println();
-                System.out.println("Name: " + inStockCDS.get(i).getItemName());
-                System.out.println("Price: $" + inStockCDS.get(i).getItemPrice());
-                System.out.println("Length in seconds: " + inStockCDS.get(i).getCdLength());
+                System.out.println("Name: " + inStockCD.getName());
+                System.out.println("Price: $" + inStockCD.getPrice());
+                System.out.println("Length in seconds: " + inStockCD.getCdLength());
             }
         }
         System.out.println("******************************************************************");
@@ -156,12 +153,12 @@ import java.util.*;
     public void availableDVDs() {
         System.out.println("******************************************************************");
         System.out.println("Available DVDs: ");
-        for (int i = 0; i < inStockDVDS.size(); i++) {
-            if (inStockDVDS.get(i) != null) {
+        for (DVD inStockDVD : inStockDVDS) {
+            if (inStockDVD.getName() != null) {
                 System.out.println();
-                System.out.println("Name: " + inStockDVDS.get(i).getItemName());
-                System.out.println("Price: $" + inStockDVDS.get(i).getItemPrice());
-                System.out.println("Length in seconds: " + inStockDVDS.get(i).getDvdLength());
+                System.out.println("Name: " + inStockDVD.getName());
+                System.out.println("Price: $" + inStockDVD.getPrice());
+                System.out.println("Length in seconds: " + inStockDVD.getDvdLength());
             }
         }
         System.out.println("******************************************************************");
@@ -186,7 +183,7 @@ import java.util.*;
      * @return return dvd's price
      */
     public double getDVDPrice(int itemID) {
-        return inStockDVDS.get(itemID).getItemPrice();
+        return inStockDVDS.get(itemID).getPrice();
     }
 
     /**
@@ -194,7 +191,7 @@ import java.util.*;
      * @return return cd's price
      */
     public double getCDPrice(int itemID) {
-        return inStockCDS.get(itemID).getItemPrice();
+        return inStockCDS.get(itemID).getPrice();
     }
 
     /**
@@ -202,7 +199,7 @@ import java.util.*;
      * @return return book's price
      */
     public double getBookPrice(int itemID) {
-        return inStockBooks.get(itemID).getItemPrice();
+        return inStockBooks.get(itemID).getPrice();
     }
 
 
@@ -402,13 +399,16 @@ import java.util.*;
     }
 
     public void addCD(String itemName, double itemPrice, double cdLength, int cdID) {
-        inStockCDS.add(new CD(itemName,itemPrice,cdLength,cdID));
+        cd = new CD(itemName,itemPrice,cdLength,cdID);
+        inStockCDS.add(cd);
     }
     public void addBook(String itemName, double itemPrice, int pages, int bookID) {
-        inStockBooks.add(new Book(itemName,itemPrice,pages,bookID));
+        book = new Book(itemName,itemPrice,pages,bookID);
+        inStockBooks.add(book);
     }
     public void addDVD(String itemName, double itemPrice, double dvdLength, int cdID) {
-        inStockDVDS.add(new DVD(itemName,itemPrice,dvdLength,cdID));
+        dvd = new DVD(itemName,itemPrice,dvdLength,cdID);
+        inStockDVDS.add(dvd);
     }
 
     public Factory getFactory() {

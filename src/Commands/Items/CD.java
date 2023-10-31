@@ -45,22 +45,6 @@ public class CD extends Item {
 
     /**
      *
-     * @return return the item's name
-     */
-    public String getItemName() {
-        return itemName;
-    }
-
-    /**
-     *
-     * @return return the item's price
-     */
-    public double getItemPrice() {
-        return itemPrice;
-    }
-
-    /**
-     *
      * @return return the cd's length
      */
     public double getCdLength() {

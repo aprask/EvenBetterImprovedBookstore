@@ -45,22 +45,6 @@ public class DVD extends Item{
 
     /**
      *
-     * @return return the item's name
-     */
-    public String getItemName() {
-        return itemName;
-    }
-
-    /**
-     *
-     * @return return the item's price
-     */
-    public double getItemPrice() {
-        return itemPrice;
-    }
-
-    /**
-     *
      * @return return the dvd's length
      */
     public double getDvdLength() {
