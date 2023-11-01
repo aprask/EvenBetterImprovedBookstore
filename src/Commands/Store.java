@@ -1,12 +1,6 @@
 package Commands;
 import Commands.Items.Inventory;
 import java.util.*;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
  *
  * @author skalg
@@ -24,7 +18,8 @@ public class Store {
     {
         this.inventory.initializeItems();
     }
-    public void openStore() {
+    public void openStore()
+    {
         bookLogo();
         System.out.println("Welcome to the book store!");
         try {
