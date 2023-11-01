@@ -102,14 +102,25 @@ public class Register implements Customer {
      * @return return the selected item based on (1,2,3)
      */
     public int createItems(Inventory inventory) {
-        System.out.println();
-        inventory.availableBooks();
-        inventory.availableCDs();
-        inventory.availableDVDs();
-        System.out.println("\nType \"1\" to purchase a Book");
-        System.out.println("Type \"2\" to purchase a CD");
-        System.out.println("Type \"3\" to purchase a DVD");
-        return scan.nextInt();
+        while(true)
+        {
+            System.out.println();
+            inventory.availableBooks();
+            inventory.availableCDs();
+            inventory.availableDVDs();
+            System.out.println("\nType \"1\" to purchase a Book");
+            System.out.println("Type \"2\" to purchase a CD");
+            System.out.println("Type \"3\" to purchase a DVD");
+            System.out.println("Type \"-1\" to compare items");
+            if(scan.nextInt() == -1)
+            {
+                System.out.println("finish later");
+            }
+            else if(scan.nextInt() != -1)
+            {
+                return scan.nextInt();
+            }
+        }
     }
 
     /**

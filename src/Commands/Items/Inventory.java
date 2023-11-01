@@ -16,13 +16,16 @@ import java.util.*;
     private DVD dvd;
     private CD cd;
     private Book book;
+    public static final ArrayList<Integer> compareCDList = new ArrayList<>();
+    public static final ArrayList<Integer> compareBookList = new ArrayList<>();
+    public static final ArrayList<Integer> compareDVDList = new ArrayList<>();
+    private static final ArrayList<Item> compareItems = new ArrayList<>();
     protected static int selectionID;
     private final Scanner scan = new Scanner(System.in);
 
     public Inventory() {
 
     }
-
     public void initializeItems() {
         System.out.println("\nHello manager!\n");
         System.out.println("Would you like to create custom items? ");
@@ -31,7 +34,7 @@ import java.util.*;
         String stockOrCustom = scan.next();
         if (stockOrCustom.equalsIgnoreCase("yes")) {
             this.factory.constructItem();
-            System.out.println("Total Cost of Inventory: " + this.inventoryValue());
+            System.out.println("Total Cost of Inventory: $" + this.inventoryValue());
         } else {
             Book narnia = new Book("Narnia", 15.99, 300, 0);
             inStockBooks.add(narnia);
@@ -65,8 +68,20 @@ import java.util.*;
             inStockDVDS.add(theGodfather);
             DVD theSopranos = new DVD("The Sopranos", 12.55, 1202, 4);
             inStockDVDS.add(theSopranos);
-            System.out.println("Total Cost of Inventory: " + this.inventoryValue());
+            System.out.println("Total Cost of Inventory: $" + this.inventoryValue());
         }
+    }
+    public int getNumberOfCDs()
+    {
+        return inStockCDS.size();
+    }
+    public int getNumberOfBooks()
+    {
+        return inStockBooks.size();
+    }
+    public int getNumberOfDVDs()
+    {
+        return inStockDVDS.size();
     }
 
     public void availableBooks() {
@@ -229,25 +244,25 @@ import java.util.*;
     }
 
     public void soldProduct() {
-        System.out.println("CDs: ");
+        System.out.println("\nCDs: ");
         for (CD inStockCD : inStockCDS) {
             if (inStockCD.isStatus()) {
                 System.out.println("\tName: " + inStockCD.getName());
                 System.out.println("\tID: " + inStockCD.getID());
             }
         }
-        System.out.println("Books: ");
+        System.out.println("\nBooks: ");
         for (Book inStockBook : inStockBooks) {
             if (inStockBook.isStatus()) {
-                System.out.println("Name: " + inStockBook.getName());
-                System.out.println("ID: " + inStockBook.getID());
+                System.out.println("\tName: " + inStockBook.getName());
+                System.out.println("\tID: " + inStockBook.getID());
             }
         }
-        System.out.println("DVDS: ");
+        System.out.println("\nDVDS: ");
         for (DVD inStockDVD : inStockDVDS) {
             if (inStockDVD.isStatus()) {
-                System.out.println("Name: " + inStockDVD.getName());
-                System.out.println("ID: " + inStockDVD.getID());
+                System.out.println("\tName: " + inStockDVD.getName());
+                System.out.println("\tID: " + inStockDVD.getID());
             }
         }
     }
@@ -326,5 +341,9 @@ import java.util.*;
 
     public void setFactory(Factory factory) {
         this.factory = factory;
+    }
+    public void compareItems()
+    {
+
     }
 }

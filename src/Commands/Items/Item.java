@@ -1,9 +1,17 @@
 package Commands.Items;
 
+import java.util.ArrayList;
+
 public abstract class Item implements Comparable {
     private String name;
     private double price;
     private int ID;
+    private final Inventory inventory = new Inventory();
+    public Item()
+    {
+
+    }
+
     public Item(String itemName) {
         this.name = itemName;
     }
@@ -44,20 +52,10 @@ public abstract class Item implements Comparable {
     }
 
     @Override
-    public String comparePrices(Item item1, Item item2) {
-        if(item1.getPrice() > item2.getPrice())
-        {
-            return item1.getName() + " is more expensive than " + item2.getPrice();
-        }
-        else if(item1.getPrice() == item2.getPrice())
-        {
-            return item1.getName() + " is the same price as " + item2.getPrice();
-        }
-        else if(item2.getPrice() > item1.getPrice())
-        {
-            return item2.getName() + " is more expensive than " + item1.getPrice();
-        }
-        return null;
+    public String comparePrices(double price1, double price2) {
+        if(price1 > price2) return "The first item is more expensive than the second item";
+        else if(price1 < price2) return "The second item is more expensive than the first item";
+        else return "They are the same price";
     }
 
     @Override

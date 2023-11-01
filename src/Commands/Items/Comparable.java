@@ -1,6 +1,8 @@
 package Commands.Items;
 
+import java.util.ArrayList;
+
 public interface Comparable
 {
-    public String comparePrices(Item item1, Item item2);
+    public String comparePrices(double price1, double price2);
 }
