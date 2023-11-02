@@ -15,6 +15,11 @@ public class Store {
     private ArrayList<Integer> dvdIDHistory = new ArrayList<>();
     private ArrayList<Integer> cdIDHistory = new ArrayList<>();
     private ArrayList<Integer> bookIDHistory = new ArrayList<>();
+    private static int previousPurchasedProduct;
+    private static int previousProductType;
+    public static int getPreviousPurchasedProduct() {
+        return previousPurchasedProduct;
+    }
     public void prepareStore()
     {
         this.inventory.initializeItems();
@@ -54,6 +59,7 @@ public class Store {
                 System.out.println("Which Book? Select by ID ");
                 this.inventory.availableBooks();
                 int selectedBookID = scan.nextInt();
+                previousPurchasedProduct = (selectedBookID);
                 if(!this.bookIDHistory.contains(selectedBookID))
                 {
                     this.bookIDHistory.add(selectedBookID);
@@ -71,6 +77,7 @@ public class Store {
                 System.out.println("Which CD? Select by ID ");
                 this.inventory.availableCDs();
                 int selectedCDID = scan.nextInt();
+                previousPurchasedProduct = (selectedCDID);
                 if(!this.cdIDHistory.contains(selectedCDID))
                 {
                     this.cdIDHistory.add(selectedCDID);
@@ -88,6 +95,7 @@ public class Store {
                 System.out.println("Which DVD? Select by ID ");
                 this.inventory.availableDVDs();
                 int selectedDVDID = scan.nextInt();
+                previousPurchasedProduct = (selectedDVDID);
                 if(!this.dvdIDHistory.contains(selectedDVDID))
                 {
                     this.dvdIDHistory.add(selectedDVDID);
@@ -133,10 +141,12 @@ public class Store {
                 while (true) {
                     System.out.println("Would you like a CD, DVD, or a Book? ");
                     itemIDTracker = this.register.createItems(this.inventory);
+                    previousProductType = itemIDTracker;
                     this.inventory.setSelectionID(itemIDTracker);
                     menu();
 
                     System.out.println("\nWould you like to add another item to your cart? Type \"1\": ");
+                    System.out.println("\nWould you like to compare your purchased item to another item? Type \"5\": ");
                     if (this.register.getPartyTotal() > 1) {
                         System.out.println("Or would you like to move on to the next customer in your party? or \"2\"");
                     }
@@ -161,7 +171,12 @@ public class Store {
                     } else if (cartChoice.equalsIgnoreCase("2")) {
                         trackOrderAmount++;
                         break;
-                    } else if (!cartChoice.equalsIgnoreCase("1")) {
+                    }
+                    else if(cartChoice.equalsIgnoreCase("5"))
+                    {
+                        this.inventory.preCompare(previousPurchasedProduct,previousProductType);
+                    }
+                    else if (!cartChoice.equalsIgnoreCase("1")) {
                         break;
                     }
                 }

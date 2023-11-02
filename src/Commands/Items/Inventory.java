@@ -1,6 +1,7 @@
 package Commands.Items;
 
 import Commands.Items.Factory.Factory;
+import Commands.Register;
 
 import java.util.*;
 /**
@@ -16,16 +17,27 @@ import java.util.*;
     private DVD dvd;
     private CD cd;
     private Book book;
-    public static final ArrayList<Integer> compareCDList = new ArrayList<>();
-    public static final ArrayList<Integer> compareBookList = new ArrayList<>();
-    public static final ArrayList<Integer> compareDVDList = new ArrayList<>();
-    private static final ArrayList<Item> compareItems = new ArrayList<>();
     protected static int selectionID;
+    private static double comparePrice = 0;
     private final Scanner scan = new Scanner(System.in);
+    private static Item previouslyPurchasedProduct;
 
     public Inventory() {
 
     }
+
+    public static double getComparePrice() {
+        return comparePrice;
+    }
+
+    public static void setComparePrice(double comparePrice) {
+        Inventory.comparePrice = comparePrice;
+    }
+
+    public static Item getPreviouslyPurchasedProduct() {
+        return previouslyPurchasedProduct;
+    }
+
     public void initializeItems() {
         System.out.println("\nHello manager!\n");
         System.out.println("Would you like to create custom items? ");
@@ -299,6 +311,7 @@ import java.util.*;
     public void sellCD(int ID) {
         for (int i = 0; i < inStockCDS.size(); i++) {
             if (i == ID) {
+                previouslyPurchasedProduct = inStockCDS.get(i);
                 inStockCDS.get(i).setStatus(true);
             }
         }
@@ -307,6 +320,7 @@ import java.util.*;
     public void sellBook(int ID) {
         for (int i = 0; i < inStockBooks.size(); i++) {
             if (i == ID) {
+                previouslyPurchasedProduct = inStockBooks.get(i);
                 inStockBooks.get(i).setStatus(true);
             }
         }
@@ -315,6 +329,7 @@ import java.util.*;
     public void sellDVD(int ID) {
         for (int i = 0; i < inStockDVDS.size(); i++) {
             if (i == ID) {
+                previouslyPurchasedProduct = inStockDVDS.get(i);
                 inStockDVDS.get(i).setStatus(true);
             }
         }
@@ -342,8 +357,52 @@ import java.util.*;
     public void setFactory(Factory factory) {
         this.factory = factory;
     }
-    public void compareItems()
+    public Item returnPreviousProduct()
     {
+        return previouslyPurchasedProduct;
+    }
 
+    public void preCompare(int previousProductID, int previousProductType)
+    {
+        System.out.println("We will now compare your previous purchased item to a different item. ");
+        System.out.println("What is the item type of the comparison item? ");
+        System.out.println("1 = CD\n 2 = Book\n 3 = DVD");
+        int itemType = scan.nextInt();
+        System.out.println("What is the ID of the item? ");
+        int itemID = scan.nextInt();
+        Item itemCompare = findSpecifiedItem(itemType,itemID);
+        previouslyPurchasedProduct.compareTo(itemCompare);
+    }
+    public Item findSpecifiedItem(int itemType, int itemID)
+    {
+        Item item;
+        if(itemType == 1)
+        {
+            for (CD inStockCD : inStockCDS) {
+                if (inStockCD.getCdID() == itemID) {
+                    item = new CD(inStockCD.getName(), inStockCD.getPrice());
+                    return item;
+                }
+            }
+        }
+        if(itemType == 2)
+        {
+            for (Book inStockBook : inStockBooks) {
+                if (inStockBook.getBookID() == itemID) {
+                    item = new Book(inStockBook.getName(), inStockBook.getPrice());
+                    return item;
+                }
+            }
+        }
+        if(itemType == 1)
+        {
+            for (DVD inStockDVD : inStockDVDS) {
+                if (inStockDVD.getDvdID() == itemID) {
+                    item = new DVD(inStockDVD.getName(), inStockDVD.getPrice());
+                    return item;
+                }
+            }
+        }
+        return null;
     }
 }

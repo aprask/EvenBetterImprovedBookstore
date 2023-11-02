@@ -81,6 +81,10 @@ public class DVD extends Item{
     public void setStatus(boolean status) {
         this.status = status;
     }
+    @Override
+    public boolean compareTo(Item item) {
+        return super.compareTo(item);
+    }
 }
 
 

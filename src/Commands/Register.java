@@ -1,8 +1,10 @@
 package Commands;
 import Commands.Items.Inventory;
+import Commands.Items.Item;
 import Commands.User.*;
 import java.util.*;
 
+import static Commands.Items.Factory.ItemType.CD;
 
 /**
  *
@@ -11,6 +13,8 @@ import java.util.*;
 public class Register implements Customer {
     private static double orderTotal;
     public EnterStore enter;
+    private Item item;
+    private Item item2;
     private static final Queue<String> orderOfCustomers = new LinkedList<>();
     private static int partyTotal;
     public Scanner scan = new Scanner(System.in);
@@ -102,8 +106,6 @@ public class Register implements Customer {
      * @return return the selected item based on (1,2,3)
      */
     public int createItems(Inventory inventory) {
-        while(true)
-        {
             System.out.println();
             inventory.availableBooks();
             inventory.availableCDs();
@@ -111,16 +113,7 @@ public class Register implements Customer {
             System.out.println("\nType \"1\" to purchase a Book");
             System.out.println("Type \"2\" to purchase a CD");
             System.out.println("Type \"3\" to purchase a DVD");
-            System.out.println("Type \"-1\" to compare items");
-            if(scan.nextInt() == -1)
-            {
-                System.out.println("finish later");
-            }
-            else if(scan.nextInt() != -1)
-            {
-                return scan.nextInt();
-            }
-        }
+            return scan.nextInt();
     }
 
     /**
@@ -178,4 +171,13 @@ public class Register implements Customer {
     public int getPartyTotal() {
         return partyTotal;
     }
+    public String compareValues(Item item1, double price)
+    {
+        return null;
+    }
 }
+
+
+
+
+
