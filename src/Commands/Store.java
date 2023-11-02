@@ -1,5 +1,6 @@
 package Commands;
 import Commands.Items.*;
+import Commands.User.Cart;
 
 import java.util.*;
 /**
@@ -7,7 +8,7 @@ import java.util.*;
  * @author skalg
  */
 public class Store {
-    private final Inventory inventory = new Inventory();
+    protected final Inventory inventory = new Inventory();
     public static int trackOrderAmount = 1;
     private final Register register = new Register();
     private static final Scanner scan = new Scanner(System.in);
@@ -17,6 +18,10 @@ public class Store {
     private ArrayList<Integer> bookIDHistory = new ArrayList<>();
     private static int previousPurchasedProduct;
     private static int previousProductType;
+    private final Cart cart = new Cart(this.inventory);
+    private CD cd;
+    private DVD dvd;
+    private Book book;
     public static int getPreviousPurchasedProduct() {
         return previousPurchasedProduct;
     }
@@ -57,7 +62,7 @@ public class Store {
         switch (this.inventory.getSelectionID()) {
             case 1 -> {
                 System.out.println("Which Book? Select by ID ");
-                this.inventory.availableBooks();
+                inventory.availableItems(2);
                 int selectedBookID = scan.nextInt();
                 previousPurchasedProduct = (selectedBookID);
                 if(!this.bookIDHistory.contains(selectedBookID))
@@ -75,7 +80,7 @@ public class Store {
             }
             case 2 -> {
                 System.out.println("Which CD? Select by ID ");
-                this.inventory.availableCDs();
+                inventory.availableItems(1);
                 int selectedCDID = scan.nextInt();
                 previousPurchasedProduct = (selectedCDID);
                 if(!this.cdIDHistory.contains(selectedCDID))
@@ -93,8 +98,8 @@ public class Store {
             }
             case 3 -> {
                 System.out.println("Which DVD? Select by ID ");
-                this.inventory.availableDVDs();
-                int selectedDVDID = scan.nextInt();
+                inventory.availableItems();
+                int selectedDVDID = scan.nextInt(3);
                 previousPurchasedProduct = (selectedDVDID);
                 if(!this.dvdIDHistory.contains(selectedDVDID))
                 {
@@ -133,6 +138,7 @@ public class Store {
                     return;
                 }
                 System.out.println(customerName + "'s order:");
+                this.cart.clearCart(true);
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
@@ -141,12 +147,17 @@ public class Store {
                 while (true) {
                     System.out.println("Would you like a CD, DVD, or a Book? ");
                     itemIDTracker = this.register.createItems(this.inventory);
+                    if(itemIDTracker == 5)
+                    {
+                        this.inventory.compareItems();
+                        continue;
+                    }
                     previousProductType = itemIDTracker;
                     this.inventory.setSelectionID(itemIDTracker);
                     menu();
-
+                    // TODO-- this.cart.addToCart(inventory.findSpecifiedItem(previousProductType,previousPurchasedProduct));
                     System.out.println("\nWould you like to add another item to your cart? Type \"1\": ");
-                    System.out.println("\nWould you like to compare your purchased item to another item? Type \"5\": ");
+                    System.out.println("\nWould you like to compare two items by price? Type \"5\": ");
                     if (this.register.getPartyTotal() > 1) {
                         System.out.println("Or would you like to move on to the next customer in your party? or \"2\"");
                     }
@@ -156,25 +167,30 @@ public class Store {
                     String cartChoice = scan.next();
 
                     if (cartChoice.equalsIgnoreCase("-1")) {
-                        System.out.println("Would you like a refund? Type \"yes\" or \"no\"");
+                        displayItemActions();
+                        System.out.println("\nWould you like a refund? Type \"yes\" or \"no\"");
                         String refundOption = scan.next();
                         if (refundOption.equalsIgnoreCase("yes")) {
                             RefundItems refundItems = new RefundItems(register);
                             refundItems.execute();
                             handleRestockProcedure();
-                        } else {
+                        }
+                        else
+                        {
                             CheckOutItems checkOut = new CheckOutItems(register);
                             checkOut.execute();
                             handleRestockProcedure();
                         }
                         break;
-                    } else if (cartChoice.equalsIgnoreCase("2")) {
+                    }
+                    else if (cartChoice.equalsIgnoreCase("2")) {
+                        displayItemActions();
                         trackOrderAmount++;
                         break;
                     }
                     else if(cartChoice.equalsIgnoreCase("5"))
                     {
-                        this.inventory.preCompare(previousPurchasedProduct,previousProductType);
+                        this.inventory.compareItems();
                     }
                     else if (!cartChoice.equalsIgnoreCase("1")) {
                         break;
@@ -264,5 +280,11 @@ public class Store {
      */
     public void setBookIDHistory(ArrayList<Integer> bookIDHistory) {
         this.bookIDHistory = bookIDHistory;
+    }
+    public void displayItemActions()
+    {
+        System.out.println("Before we move on, we wanted to tell you something");
+        System.out.println("You can now do this: ");
+        cart.displayItems();
     }
 }

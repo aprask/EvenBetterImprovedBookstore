@@ -4,15 +4,14 @@
  */
 package Commands.Items;
 
+import java.util.Objects;
+
 /**
  *
  * @author skalg
  */ 
 public class DVD extends Item{
-    private String itemName;
-    private double itemPrice;
     private double dvdLength;
-    private int dvdID;
     private boolean status;
 
     /**
@@ -50,20 +49,20 @@ public class DVD extends Item{
     public double getDvdLength() {
         return dvdLength;
     }
+
+    @Override
+    public int getID() {
+        return super.getID();
+    }
+
     /**
      *
      * @return the details of the item
      */
+
     @Override
     public String toString() {
         return super.toString() + "Length: " + getDvdLength();
-    }
-    /**
-     *
-     * @return return the dvd's ID
-     */
-    public int getDvdID() {
-        return dvdID;
     }
 
     /**
@@ -85,6 +84,27 @@ public class DVD extends Item{
     public boolean compareTo(Item item) {
         return super.compareTo(item);
     }
+
+    @Override
+    public void useItem() {
+        System.out.println("You can now watch " + this.getName());
+    }
+
+/*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        DVD dvd = (DVD) o;
+        return Double.compare(dvd.itemPrice, itemPrice) == 0 && Double.compare(dvd.dvdLength, dvdLength) == 0 && dvdID == dvd.dvdID && status == dvd.status && Objects.equals(itemName, dvd.itemName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), itemName, itemPrice, dvdLength, dvdID, status);
+    }
+ */
 }
 
 

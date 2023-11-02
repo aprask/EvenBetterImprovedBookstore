@@ -4,15 +4,14 @@
  */
 package Commands.Items;
 
+import java.util.Objects;
+
 /**
  *
  * @author skalg
  */
 public class CD extends Item {
-    private String itemName;
-    private double itemPrice;
     private double cdLength;
-    private int cdID;
     private boolean status;
 
     /**
@@ -59,13 +58,9 @@ public class CD extends Item {
     public String toString() {
         return super.toString() + "Length: " + getCdLength();
     }
-
-    /**
-     *
-     * @return return the cd's ID
-     */
-    public int getCdID() {
-        return cdID;
+    @Override
+    public int getID() {
+        return super.getID();
     }
 
     /**
@@ -88,4 +83,25 @@ public class CD extends Item {
     {
         return super.compareTo(item);
     }
+
+    @Override
+    public void useItem() {
+        System.out.println("You can now listen to " + this.getName());
+    }
+
+/*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CD cd = (CD) o;
+        return Double.compare(cd.itemPrice, itemPrice) == 0 && Double.compare(cd.cdLength, cdLength) == 0 && cdID == cd.cdID && status == cd.status && Objects.equals(itemName, cd.itemName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), itemName, itemPrice, cdLength, cdID, status);
+    }
+ */
 }

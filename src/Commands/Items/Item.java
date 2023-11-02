@@ -1,9 +1,12 @@
 package Commands.Items;
 
+import java.util.Objects;
+
 public abstract class Item implements Comparable {
     private String name;
     private double price;
     private int ID;
+    private boolean status;
     private final Inventory inventory = new Inventory();
     public Item()
     {
@@ -11,17 +14,20 @@ public abstract class Item implements Comparable {
     }
     public Item(String itemName) {
         this.name = itemName;
+        this.status = false;
     }
     public Item(String itemName, double itemPrice)
     {
         this.name = itemName;
         this.price = itemPrice;
+        this.status = false;
     }
 
     public Item(String itemName, double itemPrice, int id) {
         this.name = itemName;
         this.price = itemPrice;
         this.ID = id;
+        this.status = false;
     }
 
     public String getName() {
@@ -46,12 +52,38 @@ public abstract class Item implements Comparable {
         this.ID = ID;
     }
     @Override
-    public boolean compareTo(Item item) { // TODO NullPointerException
-        return !(this.price > item.getPrice());
+    public boolean compareTo(Item item) {
+        return (this.price > item.getPrice());
     }
-
     @Override
     public String toString() {
         return "Item Name: " + getName() + "\nItem Price: " + getPrice();
+    }
+    public void useItem()
+    {
+        System.out.println("You can now use " + this.name);
+    }
+
+/*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Double.compare(item.price, price) == 0 && ID == item.ID && Objects.equals(name, item.name) && Objects.equals(inventory, item.inventory);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, ID, inventory);
+    }
+
+ */
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
