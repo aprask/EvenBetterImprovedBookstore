@@ -43,17 +43,17 @@ import java.util.*;
     public void availableItems()
     {
         for (Item inStockItem : inStockItems) {
-            if (inStockItem.getClass().equals(CD.class)) {
+            if (inStockItem.getClass().equals(CD.class) && !inStockItem.isStatus()) {
                 System.out.println("\nCD: ");
                 System.out.println("Name: " + inStockItem.getName());
                 System.out.println("Price: $" + inStockItem.getPrice());
                 System.out.println("ID: " + inStockItem.getID());
-            } else if (inStockItem.getClass().equals(Book.class)) {
+            } else if (inStockItem.getClass().equals(Book.class) && !inStockItem.isStatus()) {
                 System.out.println("\nBook: ");
                 System.out.println("Name: " + inStockItem.getName());
                 System.out.println("Price: $" + inStockItem.getPrice());
                 System.out.println("ID: " + inStockItem.getID());
-            } else if (inStockItem.getClass().equals(DVD.class)) {
+            } else if (inStockItem.getClass().equals(DVD.class) && !inStockItem.isStatus()) {
                 System.out.println("\nDVD: ");
                 System.out.println("Name: " + inStockItem.getName());
                 System.out.println("Price: $" + inStockItem.getPrice());
@@ -363,11 +363,11 @@ import java.util.*;
         return null;
     }
     public void displayItems(ArrayList<Integer> dvdIDHistory, ArrayList<Integer> cdIDHistory, ArrayList<Integer> bookIDHistory) {
-        System.out.println("Items in the cart:");
+        System.out.println("Items in the cart:\n");
         for (Item inStockItem : inStockItems) {
             int compareID = inStockItem.getID();
-            for (Integer item : dvdIDHistory) {
-                if (compareID == item) {
+            for (Integer itemLocation : dvdIDHistory) {
+                if (compareID == itemLocation) {
                     System.out.println("Name: " + inStockItems.get(compareID).getName());
                     System.out.println("Price: " + inStockItems.get(compareID).getPrice());
                     System.out.println(inStockItems.get(compareID).useItem());
@@ -375,8 +375,8 @@ import java.util.*;
                     break;
                 }
             }
-            for (Integer value : cdIDHistory) {
-                if (compareID == value) {
+            for (Integer itemLocation : cdIDHistory) {
+                if (compareID == itemLocation) {
                     System.out.println("Name: " + inStockItems.get(compareID).getName());
                     System.out.println("Price: " + inStockItems.get(compareID).getPrice());
                     System.out.println(inStockItems.get(compareID).useItem());
@@ -384,8 +384,8 @@ import java.util.*;
                     break;
                 }
             }
-            for (Integer integer : bookIDHistory) {
-                if (compareID == integer) {
+            for (Integer itemLocation : bookIDHistory) {
+                if (compareID == itemLocation) {
                     System.out.println("Name: " + inStockItems.get(compareID).getName());
                     System.out.println("Price: " + inStockItems.get(compareID).getPrice());
                     System.out.println(inStockItems.get(compareID).useItem());
@@ -409,7 +409,6 @@ import java.util.*;
 
             for (Item soldItem : soldItems) {
                 if (soldItem.isStatus()) {
-                    // Determine the item type (CD, Book, or DVD)
                     String itemType = "";
                     if (soldItem.getClass().equals(CD.class)) {
                         itemType = "CD";

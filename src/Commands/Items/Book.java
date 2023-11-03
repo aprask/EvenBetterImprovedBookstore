@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Commands.Items;
 
 import java.util.Objects;
@@ -14,11 +10,22 @@ import java.util.Objects;
 public class Book extends Item {
     private int pages;
     private boolean status;
+
+    /**
+     *
+     * @param itemName receive a book name
+     */
     public Book(String itemName)
     {
         super(itemName);
         this.status = false;
     }
+
+    /**
+     *
+     * @param itemName receive a book name
+     * @param itemPrice receive a book price
+     */
     public Book(String itemName, double itemPrice)
     {
         super(itemName, itemPrice);
@@ -53,6 +60,11 @@ public class Book extends Item {
     public String toString() {
         return super.toString() + "Pages: " + getPages();
     }
+
+    /**
+     *
+     * @return the ID
+     */
     @Override
     public int getID() {
         return super.getID();
@@ -72,28 +84,37 @@ public class Book extends Item {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    /**
+     *
+     * @param item Item object
+     * @return boolean, is the compared object more expensive
+     */
     @Override
     public boolean compareTo(Item item) {
         return super.compareTo(item);
     }
-    public String useItem(String name)
+
+    /**
+     *
+     * @return return a polymorphic message
+     */
+    @Override
+    public String useItem()
     {
         String message = "You can now read: ";
-        return message + name;
+        return message + getName();
     }
 
+
+    /**
+     *
+     * @param o recieve an object
+     * @return whether the object is equal to the compared object
+     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Book book = (Book) o;
-        return pages == book.pages && status == book.status;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), pages, status);
+        return super.equals(o);
     }
 }
 

@@ -78,29 +78,22 @@ public class CD extends Item {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    @Override
+    public String useItem()
+    {
+        String message = "You can now listen to: ";
+        return message + getName();
+    }
+
     @Override
     public boolean compareTo(Item item)
     {
         return super.compareTo(item);
     }
 
-    public String useItem()
-    {
-        String message = "You can now listen to: ";
-        return message + this.getName();
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        CD cd = (CD) o;
-        return Double.compare(cd.cdLength, cdLength) == 0 && status == cd.status;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), cdLength, status);
+        return super.equals(o);
     }
 }

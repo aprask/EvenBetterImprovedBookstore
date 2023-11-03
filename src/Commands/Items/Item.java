@@ -73,15 +73,7 @@ public abstract class Item implements Comparable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
-        return Double.compare(item.price, price) == 0 && ID == item.ID && status == item.status && Objects.equals(name, item.name) && Objects.equals(inventory, item.inventory);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, price, ID, status, inventory);
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

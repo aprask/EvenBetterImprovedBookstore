@@ -80,30 +80,22 @@ public class DVD extends Item{
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    @Override
+    public String useItem()
+    {
+        String message = "You can now watch: ";
+        return message + getName();
+    }
+
     @Override
     public boolean compareTo(Item item) {
         return super.compareTo(item);
     }
 
     @Override
-    public String useItem()
-    {
-        String message = "You can now watch: ";
-        return message + this.getName();
-    }
-
-    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        DVD dvd = (DVD) o;
-        return Double.compare(dvd.dvdLength, dvdLength) == 0 && status == dvd.status;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), dvdLength, status);
+        return super.equals(o);
     }
 }
 
