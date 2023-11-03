@@ -2,9 +2,6 @@ package Commands;
 import Commands.Items.*;
 import Commands.User.*;
 import java.util.*;
-
-import static Commands.Items.Factory.ItemType.CD;
-
 /**
  *
  * @author skalg
@@ -171,6 +168,7 @@ public class Register implements Customer {
     {
         return null;
     }
+
 }
 
 

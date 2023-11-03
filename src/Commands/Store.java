@@ -16,14 +16,10 @@ public class Store {
     protected static ArrayList<Integer> dvdIDHistory = new ArrayList<>();
     protected static ArrayList<Integer> cdIDHistory = new ArrayList<>();
     protected static ArrayList<Integer> bookIDHistory = new ArrayList<>();
-    private static int previousPurchasedProduct;
-    private static final AtomicInteger previousProductType = new AtomicInteger();
+    private static int numberOfCustomers;
     private CD cd;
     private DVD dvd;
     private Book book;
-    public static int getPreviousPurchasedProduct() {
-        return previousPurchasedProduct;
-    }
     public void prepareStore()
     {
         this.inventory.initializeItems();
@@ -46,6 +42,7 @@ public class Store {
             {
                 partyTotal = scan.nextInt();
                 this.register.partyTotal(partyTotal);
+                numberOfCustomers = partyTotal-1;
                 registration = false;
             }
             catch (InputMismatchException e)
@@ -63,7 +60,6 @@ public class Store {
                 System.out.println("Which Book? Select by ID ");
                 inventory.availableItems(2);
                 int selectedBookID = scan.nextInt();
-                previousPurchasedProduct = (selectedBookID);
                 if(!bookIDHistory.contains(selectedBookID))
                 {
                     bookIDHistory.add(selectedBookID);
@@ -81,7 +77,6 @@ public class Store {
                 System.out.println("Which CD? Select by ID ");
                 inventory.availableItems(1);
                 int selectedCDID = scan.nextInt();
-                previousPurchasedProduct = (selectedCDID);
                 if(!cdIDHistory.contains(selectedCDID))
                 {
                     cdIDHistory.add(selectedCDID);
@@ -99,7 +94,6 @@ public class Store {
                 System.out.println("Which DVD? Select by ID ");
                 inventory.availableItems();
                 int selectedDVDID = scan.nextInt();
-                previousPurchasedProduct = (selectedDVDID);
                 if(!dvdIDHistory.contains(selectedDVDID))
                 {
                     dvdIDHistory.add(selectedDVDID);
@@ -150,12 +144,12 @@ public class Store {
                         this.inventory.compareItems();
                         continue;
                     }
-                    previousProductType.set(itemIDTracker);
                     this.inventory.setSelectionID(itemIDTracker);
                     menu();
                     System.out.println("\nWould you like to add another item to your cart? Type \"1\": ");
                     System.out.println("\nWould you like to compare two items by price? Type \"5\": ");
-                    if (this.register.getPartyTotal() > 1) {
+                    if (this.register.getPartyTotal() > 1 && numberOfCustomers > 0)
+                    {
                         System.out.println("Or would you like to move on to the next customer in your party? or \"2\"");
                     }
                     if (trackOrderAmount == this.register.getPartyTotal()) {
@@ -170,19 +164,21 @@ public class Store {
                         if (refundOption.equalsIgnoreCase("yes")) {
                             RefundItems refundItems = new RefundItems(register);
                             refundItems.execute();
-                            handleRestockProcedure();
-                        }
-                        else
+                        } else
                         {
                             CheckOutItems checkOut = new CheckOutItems(register);
                             checkOut.execute();
-                            handleRestockProcedure();
                         }
+                        handleRestockProcedure();
                         break;
                     }
                     else if (cartChoice.equalsIgnoreCase("2")) {
                         displayCart();
+                        this.getBookIDHistory().clear();
+                        this.getCdIDHistory().clear();
+                        this.getDvdIDHistory().clear();
                         trackOrderAmount++;
+                        numberOfCustomers--;
                         break;
                     }
                     else if(cartChoice.equalsIgnoreCase("5"))
