@@ -1,4 +1,8 @@
 package Commands.Items;
+import misc.Exit;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 /**
  *
@@ -7,31 +11,34 @@ import java.util.*;
     public class Inventory implements BookStoreSpecification
 {
     public ArrayList<Item> inStockItems = new ArrayList<>();
+    public ArrayList<Item> soldItems = new ArrayList<>();
     protected static int selectionID;
     private final Scanner scan = new Scanner(System.in);
     public Inventory() {
 
     }
     public void initializeItems() {
-            inStockItems.addAll(Arrays.asList(
-                    new Book("Narnia", 15.99, 300, 0),
-                    new Book("The Lord of the Rings", 5.00, 1000, 1),
-                    new Book("Animal Farm", 5.00, 250, 2),
-                    new Book("The Iliad", 40.25, 8000, 3),
-                    new Book("1984", 10.50, 95, 4)));
-            inStockItems.addAll(Arrays.asList(
-                    new CD("Thriller", 8.95, 250, 5),
-                    new CD("Hotel California", 6.95, 100, 6),
-                    new CD("Back in Black", 5.50, 150, 7),
-                    new CD("The Planets", 150.75, 5000, 8),
-                    new CD("Ride of the Valkyries", 250.25, 250, 9)));
-            inStockItems.addAll(Arrays.asList(
-                    new DVD("Star Wars", 9.15, 600, 10),
-                    new DVD("The Terminator", 10.55, 550, 11),
-                    new DVD("Star Trek", 10.75, 1000, 12),
-                    new DVD("The Godfather", 25.25, 1025, 13),
-                    new DVD("The Sopranos", 12.55, 1202, 14)));
-            System.out.println("Total Cost of Inventory: $" + this.inventoryValue());
+        inStockItems.addAll(Arrays.asList(
+                new Book("Narnia", 15.99, 300, 0),
+                new Book("The Lord of the Rings", 5.00, 1000, 1),
+                new Book("Animal Farm", 5.00, 250, 2),
+                new Book("The Iliad", 40.25, 8000, 3),
+                new Book("1984", 10.50, 95, 4)));
+        inStockItems.addAll(Arrays.asList(
+                new CD("Thriller", 8.95, 250, 5),
+                new CD("Hotel California", 6.95, 100, 6),
+                new CD("Back in Black", 5.50, 150, 7),
+                new CD("The Planets", 150.75, 5000, 8),
+                new CD("Ride of the Valkyries", 250.25, 250, 9)));
+        inStockItems.addAll(Arrays.asList(
+                new DVD("Star Wars", 9.15, 600, 10),
+                new DVD("The Terminator", 10.55, 550, 11),
+                new DVD("Star Trek", 10.75, 1000, 12),
+                new DVD("The Godfather", 25.25, 1025, 13),
+                new DVD("The Sopranos", 12.55, 1202, 14)));
+        System.out.print("Total Cost of Inventory: ");
+        System.out.printf("$%.2f%n", inventoryValue());
+        System.out.println();
     }
     public void availableItems()
     {
@@ -89,49 +96,53 @@ import java.util.*;
         Inventory.selectionID = selectionID;
     }
 
-    @Override
     public void restockProduct(int itemType, int amount) {
         if (itemType == 1) {
-            while(amount > 0)
-            {
+            while (amount > 0) {
                 System.out.println("Enter item name: ");
-                String itemName = scan.next();
+                String itemName = scan.nextLine();
                 System.out.println("Enter item price: ");
                 double itemPrice = scan.nextDouble();
+                scan.nextLine();
                 System.out.println("Enter item ID: ");
                 int itemID = scan.nextInt();
+                scan.nextLine();
                 System.out.println("Enter CD Length: ");
                 double cdLength = scan.nextDouble();
-                inStockItems.add(new CD(itemName,itemPrice,cdLength,itemID));
+                scan.nextLine();
+                inStockItems.add(new CD(itemName, itemPrice, cdLength, itemID));
                 amount--;
             }
-        }
-        else if (itemType == 2) {
-            while(amount > 0)
-            {
+        } else if (itemType == 2) {
+            while (amount > 0) {
                 System.out.println("Enter item name: ");
-                String itemName = scan.next();
+                String itemName = scan.nextLine();
                 System.out.println("Enter item price: ");
                 double itemPrice = scan.nextDouble();
+                scan.nextLine();
                 System.out.println("Enter item ID: ");
                 int itemID = scan.nextInt();
+                scan.nextLine();
                 System.out.println("Enter Page Count: ");
                 int pages = scan.nextInt();
-                inStockItems.add(new Book(itemName,itemPrice,pages,itemID));
+                scan.nextLine();
+                inStockItems.add(new Book(itemName, itemPrice, pages, itemID));
                 amount--;
             }
         } else if (itemType == 3) {
-            while(amount > 0)
-            {
-                System.out.println("Enter item name: ");
-                String itemName = scan.next();
+            while (amount > 0) {
                 System.out.println("Enter item price: ");
-                double itemPrice = scan.nextDouble();
+                double itemPrice = Double.parseDouble(scan.next());
+                scan.nextLine();
                 System.out.println("Enter item ID: ");
-                int itemID = scan.nextInt();
-                System.out.println("Enter CD Length");
-                double dvdLength = scan.nextDouble();
-                inStockItems.add(new DVD(itemName,itemPrice,dvdLength,itemID));
+                int itemID = Integer.parseInt(scan.next());
+                scan.nextLine();
+                System.out.println("Enter DVD Length");
+                double dvdLength = Double.parseDouble(scan.next());
+                scan.nextLine();
+                System.out.println("Enter item name: ");
+                String itemName = scan.nextLine();
+                inStockItems.add(new DVD(itemName, itemPrice, dvdLength, itemID));
                 amount--;
             }
         }
@@ -139,7 +150,8 @@ import java.util.*;
         availableItems();
     }
 
-    public void handleRestock() {
+
+    public void handleRestock() throws IOException {
         System.out.println("SOLD PRODUCTS: ");
         soldProduct();
         System.out.println("\nSelect product type to restock: ");
@@ -148,6 +160,17 @@ import java.util.*;
         int productType = scan.nextInt();
         if(productType == 4)
         {
+            Exit exit = new Exit();
+            System.out.print("Total Cost of Inventory: ");
+            System.out.printf("$%.2f%n", inventoryValue());
+            System.out.println();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            logItemsSold();
+            exit.thankYou();
             System.out.println("Goodbye");
             System.exit(0);
         }
@@ -228,6 +251,7 @@ import java.util.*;
             if (inStockItem.getClass().equals(CD.class) && !inStockItem.isStatus()) {
                 if (ID == inStockItem.getID()) {
                     inStockItem.setStatus(true); // item is sold, sold = true
+                    soldItems.add(inStockItem);
                 }
             }
         }
@@ -237,7 +261,8 @@ import java.util.*;
         for (Item inStockItem : inStockItems) {
             if (inStockItem.getClass().equals(Book.class) && !inStockItem.isStatus()) {
                 if (ID == inStockItem.getID()) {
-                    inStockItem.setStatus(true); // item is sold, sold = true
+                    inStockItem.setStatus(true);
+                    soldItems.add(inStockItem);
                 }
             }
         }
@@ -246,7 +271,8 @@ import java.util.*;
         for (Item inStockItem : inStockItems) {
             if (inStockItem.getClass().equals(DVD.class) && !inStockItem.isStatus()) {
                 if (ID == inStockItem.getID()) {
-                    inStockItem.setStatus(true); // item is sold, sold = true
+                    inStockItem.setStatus(true);
+                    soldItems.add(inStockItem);
                 }
             }
         }
@@ -336,12 +362,6 @@ import java.util.*;
         }
         return null;
     }
-
-    public void useItems(List<Item> itemsToUse)
-    {
-
-    }
-
     public void displayItems(ArrayList<Integer> dvdIDHistory, ArrayList<Integer> cdIDHistory, ArrayList<Integer> bookIDHistory) {
         System.out.println("Items in the cart:");
         for (Item inStockItem : inStockItems) {
@@ -375,4 +395,43 @@ import java.util.*;
             }
         }
     }
+    public void refundAllItems()
+    {
+        for (Item inStockItem : inStockItems) {
+            if (inStockItem.isStatus()) {
+                inStockItem.setStatus(false);
+            }
+        }
+    }
+    public void logItemsSold() {
+        try {
+            FileWriter writer = new FileWriter("src/misc/sales_report.html", true);
+
+            for (Item soldItem : soldItems) {
+                if (soldItem.isStatus()) {
+                    // Determine the item type (CD, Book, or DVD)
+                    String itemType = "";
+                    if (soldItem.getClass().equals(CD.class)) {
+                        itemType = "CD";
+                    } else if (soldItem.getClass().equals(Book.class)) {
+                        itemType = "Book";
+                    } else if (soldItem.getClass().equals(DVD.class)) {
+                        itemType = "DVD";
+                    }
+
+                    writer.write("<p>" + itemType + ": </p>\n");
+                    writer.write("<p>Name: " + soldItem.getName() + "</p>\n");
+                    writer.write("<p>Price: $" + soldItem.getPrice() + "</p>\n");
+                    writer.write("<p>ID: " + soldItem.getID() + "</p>\n");
+                    writer.write("<hr />\n");
+                }
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

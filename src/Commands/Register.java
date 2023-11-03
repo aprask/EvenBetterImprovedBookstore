@@ -28,7 +28,7 @@ public class Register implements Customer {
         for(int i = 0; i < partyTotal; i++)
         {
             System.out.println
-                    ("$" + enter.getCustomerPayments().get(i)+ " for: " + EnterStore.customerNames.get(i));
+                    ("$" + enter.getCustomerPayments().get(i)+ " spent by: " + EnterStore.customerNames.get(i));
         }
         if(partyTotal > 1)
         {
@@ -43,7 +43,7 @@ public class Register implements Customer {
         for(int i = 0; i < partyTotal; i++)
         {
             System.out.println
-                    ("$" + enter.getCustomerPayments().get(i)+ " for: " + EnterStore.customerNames.get(i));
+                    ("$" + enter.getCustomerPayments().get(i)+ " returned to: " + EnterStore.customerNames.get(i));
         }
         if(partyTotal > 1)
         {

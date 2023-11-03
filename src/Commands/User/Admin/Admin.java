@@ -3,7 +3,7 @@ package Commands.User.Admin;
 import java.util.Scanner;
 
 public class Admin {
-    private static final String ADMIN_PASSWORD = "cs1213project2";
+    private static final String ADMIN_PASSWORD = "project2";
     private final Scanner scanner;
 
     public Admin() {
@@ -26,6 +26,7 @@ public class Admin {
             }
         }
         System.out.println("You've run out of attempts. Access denied.");
+        System.exit(0);
         return false;
     }
 }

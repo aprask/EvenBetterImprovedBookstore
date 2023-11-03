@@ -1,8 +1,9 @@
 package Commands;
 import Commands.Items.*;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import Commands.User.Admin.Admin;
 
+import java.io.IOException;
+import java.util.*;
 /**
  *
  * @author skalg
@@ -17,41 +18,52 @@ public class Store {
     protected static ArrayList<Integer> cdIDHistory = new ArrayList<>();
     protected static ArrayList<Integer> bookIDHistory = new ArrayList<>();
     private static int numberOfCustomers;
-    private CD cd;
-    private DVD dvd;
-    private Book book;
+    private final Admin admin = new Admin();
     public void prepareStore()
     {
-        this.inventory.initializeItems();
-    }
-    public void openStore()
-    {
-        bookLogo();
-        System.out.println("Welcome to the book store!");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        boolean registration = true;
-        while (registration)
+        System.out.println("Hint: password is \"project2\"\n");
+        if(this.admin.didPass())
         {
-            System.out.println("How many members are in your party? ");
-            int partyTotal;
-            try
-            {
-                partyTotal = scan.nextInt();
-                this.register.partyTotal(partyTotal);
-                numberOfCustomers = partyTotal-1;
-                registration = false;
-            }
-            catch (InputMismatchException e)
-            {
-                System.out.println("ERROR, enter a number");
-                scan.next();
-            }
+            this.inventory.initializeItems();
         }
-        handleUser();
+    }
+    public void openStore() throws IOException {
+        System.out.println("Are you ready to open the store? (Yes or No?) ");
+        String openTheStore = scan.next();
+        if(openTheStore.equalsIgnoreCase("Yes"))
+        {
+            bookLogo();
+            System.out.println("Welcome to the book store!");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            boolean registration = true;
+            while (registration)
+            {
+                System.out.println("How many members are in your party? ");
+                int partyTotal;
+                try
+                {
+                    partyTotal = scan.nextInt();
+                    this.register.partyTotal(partyTotal);
+                    numberOfCustomers = partyTotal-1;
+                    registration = false;
+                }
+                catch (InputMismatchException e)
+                {
+                    System.out.println("ERROR, enter a number");
+                    scan.next();
+                }
+            }
+            handleUser();
+        }
+        else
+        {
+            System.exit(0);
+        }
+
     }
 
     public void menu() {
@@ -110,7 +122,7 @@ public class Store {
         }
     }
 
-    public void handleUser() {
+    public void handleUser() throws IOException {
         for (int i = 0; i < this.register.getPartyTotal(); i++) {
             if (this.register.enter.getClient() == null)
             {
@@ -124,7 +136,7 @@ public class Store {
      *
      * @param ID take in an ID to check if the user has purchased an item
      */
-    public void userBank(int ID) {
+    public void userBank(int ID) throws IOException {
             if (this.register.enter.purchaseItem(ID)) {
                 String customerName = this.register.handleCustomer();
                 if (customerName.isEmpty()) {
@@ -164,6 +176,7 @@ public class Store {
                         if (refundOption.equalsIgnoreCase("yes")) {
                             RefundItems refundItems = new RefundItems(register);
                             refundItems.execute();
+                            this.inventory.refundAllItems();
                         } else
                         {
                             CheckOutItems checkOut = new CheckOutItems(register);
@@ -191,8 +204,7 @@ public class Store {
                 }
             }
         }
-        public void handleRestockProcedure()
-        {
+        public void handleRestockProcedure() throws IOException {
             System.out.println("\nHello manager");
             System.out.println("Since all the customers have received their items, it is now time to restock the store");
             System.out.println("Complete the following procedure to properly close the store until the next set of customers arrive\n");
@@ -228,7 +240,6 @@ public class Store {
         System.out.println("                    '''");
         // source: https://www.asciiart.eu/books/books
     }
-
     /**
      *
      * @return return the DVD's existing purchased ID
