@@ -111,33 +111,33 @@ import java.util.*;
     public void restockProduct(int itemType, int amount) {
         if (itemType == 1) {
             while (amount > 0) {
-                System.out.println("Enter item name: ");
-                String itemName = scan.nextLine();
                 System.out.println("Enter item price: ");
-                double itemPrice = scan.nextDouble();
+                double itemPrice = Double.parseDouble(scan.next());
                 scan.nextLine();
                 System.out.println("Enter item ID: ");
-                int itemID = scan.nextInt();
+                int itemID = Integer.parseInt(scan.next());
                 scan.nextLine();
-                System.out.println("Enter CD Length: ");
-                double cdLength = scan.nextDouble();
+                System.out.println("Enter DVD Length");
+                double cdLength = Double.parseDouble(scan.next());
                 scan.nextLine();
+                System.out.println("Enter item name: ");
+                String itemName = scan.nextLine();
                 inStockItems.add(new CD(itemName, itemPrice, cdLength, itemID));
                 amount--;
             }
         } else if (itemType == 2) {
             while (amount > 0) {
-                System.out.println("Enter item name: ");
-                String itemName = scan.nextLine();
                 System.out.println("Enter item price: ");
-                double itemPrice = scan.nextDouble();
+                double itemPrice = Double.parseDouble(scan.next());
                 scan.nextLine();
                 System.out.println("Enter item ID: ");
-                int itemID = scan.nextInt();
+                int itemID = Integer.parseInt(scan.next());
                 scan.nextLine();
-                System.out.println("Enter Page Count: ");
-                int pages = scan.nextInt();
+                System.out.println("Enter DVD Length");
+                int pages = Integer.parseInt(scan.next());
                 scan.nextLine();
+                System.out.println("Enter item name: ");
+                String itemName = scan.nextLine();
                 inStockItems.add(new Book(itemName, itemPrice, pages, itemID));
                 amount--;
             }

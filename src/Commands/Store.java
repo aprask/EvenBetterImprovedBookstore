@@ -152,9 +152,21 @@ public class Store {
                         this.inventory.compareItems();
                         continue;
                     }
+                    else if(itemIDTracker == 4)
+                    {
+                        System.out.print("Total Cost of Inventory: ");
+                        System.out.printf("$%.2f%n", this.inventory.inventoryValue());
+                        System.out.println();                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        continue;
+                    }
                     this.inventory.setSelectionID(itemIDTracker);
                     menu();
-                    System.out.println("\nWould you like to add another item to your cart? Type \"1\": ");
+                    System.out.println("\nWould you like to add an item to your cart? Type \"1\": ");
+                    System.out.println("\nWould you like to see the current inventory value? Type \"4\": ");
                     System.out.println("\nWould you like to compare two items by price? Type \"5\": ");
                     if (this.register.getPartyTotal() > 1 && numberOfCustomers > 0)
                     {
@@ -164,7 +176,6 @@ public class Store {
                         System.out.println("Or would you like to checkout? Type \"-1\"");
                     }
                     String cartChoice = scan.next();
-
                     if (cartChoice.equalsIgnoreCase("-1")) {
                         displayCart();
                         System.out.println("\nWould you like a refund? Type \"yes\" or \"no\"");
@@ -193,6 +204,16 @@ public class Store {
                     else if(cartChoice.equalsIgnoreCase("5"))
                     {
                         this.inventory.compareItems();
+                    }
+                    else if(cartChoice.equalsIgnoreCase("4"))
+                    {
+                        System.out.print("Total Cost of Inventory: ");
+                        System.out.printf("$%.2f%n", this.inventory.inventoryValue());
+                        System.out.println();                        try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                        }
                     }
                     else if (!cartChoice.equalsIgnoreCase("1")) {
                         break;

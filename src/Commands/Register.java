@@ -105,7 +105,8 @@ public class Register implements Customer {
             System.out.println("\nType \"1\" to purchase a Book");
             System.out.println("Type \"2\" to purchase a CD");
             System.out.println("Type \"3\" to purchase a DVD");
-            System.out.println("Type \"5\" to compare two items: ");
+            System.out.println("Type \"4\" to display the total inventory value");
+            System.out.println("Type \"5\" to compare two items");
             return scan.nextInt();
     }
 
