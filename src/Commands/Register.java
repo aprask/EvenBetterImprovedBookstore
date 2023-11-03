@@ -164,10 +164,6 @@ public class Register implements Customer {
     public int getPartyTotal() {
         return partyTotal;
     }
-    public String compareValues(Item item1, double price)
-    {
-        return null;
-    }
 
 }
 

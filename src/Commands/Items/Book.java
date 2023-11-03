@@ -106,10 +106,9 @@ public class Book extends Item {
         return message + getName();
     }
 
-
     /**
      *
-     * @param o recieve an object
+     * @param o receive an object
      * @return whether the object is equal to the compared object
      */
     @Override

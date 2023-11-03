@@ -18,6 +18,8 @@ import java.util.*;
 
     }
     public void initializeItems() {
+        // create a default set of items (dynamic implementation will be implemented for project 3)
+        // I plan on using the Factory design pattern in the next project
         inStockItems.addAll(Arrays.asList(
                 new Book("Narnia", 15.99, 300, 0),
                 new Book("The Lord of the Rings", 5.00, 1000, 1),
@@ -61,6 +63,11 @@ import java.util.*;
             }
         }
     }
+
+    /**
+     *
+     * @param itemType receive an itemType (1=CD,2=Book,3=DVD)
+     */
     public void availableItems(int itemType)
     {
         for (Item inStockItem : inStockItems) {
@@ -96,6 +103,11 @@ import java.util.*;
         Inventory.selectionID = selectionID;
     }
 
+    /**
+     *
+     * @param itemType receive an itemType (1=CD,2=Book,3=DVD)
+     * @param amount receive the quantity
+     */
     public void restockProduct(int itemType, int amount) {
         if (itemType == 1) {
             while (amount > 0) {
@@ -149,8 +161,6 @@ import java.util.*;
         System.out.println("Current Inventory:");
         availableItems();
     }
-
-
     public void handleRestock() throws IOException {
         System.out.println("SOLD PRODUCTS: ");
         soldProduct();
@@ -213,6 +223,10 @@ import java.util.*;
         calculateCompare(item1ID,item2ID);
     }
 
+    /**
+     *
+     * @return total cost of books (must not be out of stock)
+     */
     public double totalCostOfBooks() {
         double total = 0;
         for (Item inStockItem : inStockItems) {
@@ -222,7 +236,10 @@ import java.util.*;
         }
         return total;
     }
-
+    /**
+     *
+     * @return total cost of cds (must not be out of stock)
+     */
     public double totalCostOfCDs() {
         double total = 0;
         for (Item inStockItem : inStockItems) {
@@ -232,6 +249,10 @@ import java.util.*;
         }
         return total;
     }
+    /**
+     *
+     * @return total cost of dvds (must not be out of stock)
+     */
     public double totalCostOfDVDs() {
         double total = 0;
         for (Item inStockItem : inStockItems) {
@@ -241,11 +262,20 @@ import java.util.*;
         }
         return total;
     }
+
+    /**
+     *
+     * @return total cost of inventory
+     */
     @Override
     public double inventoryValue() {
         return totalCostOfBooks() + totalCostOfDVDs() + totalCostOfCDs();
     }
 
+    /**
+     *
+     * @param ID given ID sell item
+     */
     public void sellCD(int ID) {
         for (Item inStockItem : inStockItems) {
             if (inStockItem.getClass().equals(CD.class) && !inStockItem.isStatus()) {
@@ -256,7 +286,10 @@ import java.util.*;
             }
         }
     }
-
+    /**
+     *
+     * @param ID given ID sell item
+     */
     public void sellBook(int ID) {
         for (Item inStockItem : inStockItems) {
             if (inStockItem.getClass().equals(Book.class) && !inStockItem.isStatus()) {
@@ -267,6 +300,10 @@ import java.util.*;
             }
         }
     }
+    /**
+     *
+     * @param ID given ID sell item
+     */
     public void sellDVD(int ID) {
         for (Item inStockItem : inStockItems) {
             if (inStockItem.getClass().equals(DVD.class) && !inStockItem.isStatus()) {
@@ -277,17 +314,12 @@ import java.util.*;
             }
         }
     }
-    public void addCD(String itemName, double itemPrice, double cdLength, int cdID) {
-        inStockItems.add(new CD(itemName, itemPrice, cdLength, cdID));
-    }
 
-    public void addBook(String itemName, double itemPrice, int pages, int bookID) {
-        inStockItems.add(new Book(itemName, itemPrice, pages, bookID));
-    }
-
-    public void addDVD(String itemName, double itemPrice, double dvdLength, int cdID) {
-        inStockItems.add(new DVD(itemName, itemPrice, dvdLength, cdID));
-    }
+    /**
+     *
+     * @param itemID by ID find price
+     * @return price
+     */
     public double getDVDPrice(int itemID) {
         for (Item inStockItem : inStockItems) {
             if (inStockItem.getClass().equals(DVD.class) && inStockItem.getID() == itemID) {
@@ -296,6 +328,11 @@ import java.util.*;
         }
         return -1;
     }
+    /**
+     *
+     * @param itemID by ID find price
+     * @return price
+     */
     public double getCDPrice(int itemID) {
         for (Item inStockItem : inStockItems) {
             if (inStockItem.getClass().equals(CD.class) && inStockItem.getID() == itemID) {
@@ -304,6 +341,11 @@ import java.util.*;
         }
         return -1;
     }
+    /**
+     *
+     * @param itemID by ID find price
+     * @return price
+     */
     public double getBookPrice(int itemID) {
         for (Item inStockItem : inStockItems) {
             if (inStockItem.getClass().equals(Book.class) && inStockItem.getID() == itemID) {
@@ -312,14 +354,21 @@ import java.util.*;
         }
         return -1;
     }
+
+    /**
+     *
+     * @param item1ID given ID of item
+     * @param item2ID given ID of item
+     */
     public void calculateCompare(int item1ID, int item2ID)
     {
+        // use one item as a compare item (item1)
         for(int i = 0; i < inStockItems.size(); i++)
         {
             if(inStockItems.get(i).getID() == item1ID)
             {
-                Item compareItem = inStockItems.get(i);
-                for (Item inStockItem : inStockItems) {
+                Item compareItem = inStockItems.get(i); // compare
+                for (Item inStockItem : inStockItems) { // inner loop
                     if (inStockItem.getID() == item2ID)
                     {
                         if(compareItem.compareTo(inStockItem))
@@ -349,19 +398,12 @@ import java.util.*;
         }
     }
 
-    public Item returnItem(int previousProductID, int previousProductType)
-    {
-        if(previousProductType == 1)
-        {
-            for (Item inStockItem : inStockItems)
-            {
-                if (inStockItem != null && inStockItem.getID() == previousProductID) {
-                    return inStockItem;
-                }
-            }
-        }
-        return null;
-    }
+    /**
+     *
+     * @param dvdIDHistory give the ID collection of sold dvds
+     * @param cdIDHistory give the ID collection of sold cds
+     * @param bookIDHistory give the ID collection of sold books
+     */
     public void displayItems(ArrayList<Integer> dvdIDHistory, ArrayList<Integer> cdIDHistory, ArrayList<Integer> bookIDHistory) {
         System.out.println("Items in the cart:\n");
         for (Item inStockItem : inStockItems) {

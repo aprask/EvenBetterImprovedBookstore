@@ -10,6 +10,7 @@ public class Exit
     {
 
     }
+    // bonus: added a bit of html/css/js to the project to make it more dynamic
     public void thankYou() throws IOException {
         String URL = "src/misc/sales_report.html";
         File file = new File(URL);

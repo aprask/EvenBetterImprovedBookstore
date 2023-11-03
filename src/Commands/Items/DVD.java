@@ -1,10 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Commands.Items;
-
-import java.util.Objects;
 
 /**
  *
@@ -23,6 +17,12 @@ public class DVD extends Item{
         super(itemName);
         this.status = false;
     }
+
+    /**
+     *
+     * @param itemName retrieve an item's name
+     * @param itemPrice retrieve an item's price
+     */
     public DVD(String itemName, double itemPrice)
     {
         super(itemName, itemPrice);
@@ -50,6 +50,10 @@ public class DVD extends Item{
         return dvdLength;
     }
 
+    /**
+     *
+     * @return the item ID
+     */
     @Override
     public int getID() {
         return super.getID();
@@ -59,7 +63,6 @@ public class DVD extends Item{
      *
      * @return the details of the item
      */
-
     @Override
     public String toString() {
         return super.toString() + "Length: " + getDvdLength();
@@ -81,18 +84,27 @@ public class DVD extends Item{
         this.status = status;
     }
 
+    /**
+     * @return return a polymorphic message
+     */
     @Override
     public String useItem()
     {
         String message = "You can now watch: ";
         return message + getName();
     }
-
+    /**
+     * @param item Item object
+     * @return boolean, is the compared object more expensive
+     */
     @Override
     public boolean compareTo(Item item) {
         return super.compareTo(item);
     }
-
+    /**
+     * @param o receive an object
+     * @return whether the object is equal to the compared object
+     */
     @Override
     public boolean equals(Object o) {
         return super.equals(o);

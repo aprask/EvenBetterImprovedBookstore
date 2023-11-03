@@ -10,6 +10,10 @@ public class Admin {
         scanner = new Scanner(System.in);
     }
 
+    /**
+     *
+     * @return boolean whether the manager passed the password test
+     */
     public boolean didPass()
     {
         int attempts = 5;

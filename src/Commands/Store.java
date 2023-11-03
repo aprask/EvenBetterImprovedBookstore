@@ -4,10 +4,6 @@ import Commands.User.Admin.Admin;
 
 import java.io.IOException;
 import java.util.*;
-/**
- *
- * @author skalg
- */
 public class Store {
     protected final Inventory inventory = new Inventory();
     public static int trackOrderAmount = 1;

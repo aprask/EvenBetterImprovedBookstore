@@ -37,6 +37,11 @@ public class Bank
     {
         banks.add(userClient.getID(),1000);
     }
+
+    /**
+     *
+     * @param payment receive a payment from the user
+     */
     public void deductFromBank(double payment)
     {
         int ID = this.userClient.getID();
