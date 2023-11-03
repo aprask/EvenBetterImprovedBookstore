@@ -15,3 +15,11 @@ public class Main
         store.handleRestockProcedure();
     }
 }
+/*
+TODO
+    1) Fix restock function
+    2) Clean Code
+    3) Write UML
+    4) Write Documentation
+    5) Write Java Doc
+ */

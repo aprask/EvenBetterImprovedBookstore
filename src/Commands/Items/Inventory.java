@@ -144,7 +144,13 @@ import java.util.*;
         soldProduct();
         System.out.println("\nSelect product type to restock: ");
         System.out.println("1=CD\n2=Book\n3=DVD");
+        System.out.println("4=Exit");
         int productType = scan.nextInt();
+        if(productType == 4)
+        {
+            System.out.println("Goodbye");
+            System.exit(0);
+        }
         System.out.println("How much of this product (quantity) would you like to add to the shelf? ");
         int quantityOfProduct = scan.nextInt();
         restockProduct(productType, quantityOfProduct);
@@ -219,7 +225,7 @@ import java.util.*;
 
     public void sellCD(int ID) {
         for (Item inStockItem : inStockItems) {
-            if (inStockItem.getClass().equals(CD.class) && inStockItem.isStatus()) {
+            if (inStockItem.getClass().equals(CD.class) && !inStockItem.isStatus()) {
                 if (ID == inStockItem.getID()) {
                     inStockItem.setStatus(true); // item is sold, sold = true
                 }
@@ -229,7 +235,7 @@ import java.util.*;
 
     public void sellBook(int ID) {
         for (Item inStockItem : inStockItems) {
-            if (inStockItem.getClass().equals(Book.class) && inStockItem.isStatus()) {
+            if (inStockItem.getClass().equals(Book.class) && !inStockItem.isStatus()) {
                 if (ID == inStockItem.getID()) {
                     inStockItem.setStatus(true); // item is sold, sold = true
                 }
@@ -238,7 +244,7 @@ import java.util.*;
     }
     public void sellDVD(int ID) {
         for (Item inStockItem : inStockItems) {
-            if (inStockItem.getClass().equals(DVD.class) && inStockItem.isStatus()) {
+            if (inStockItem.getClass().equals(DVD.class) && !inStockItem.isStatus()) {
                 if (ID == inStockItem.getID()) {
                     inStockItem.setStatus(true); // item is sold, sold = true
                 }
