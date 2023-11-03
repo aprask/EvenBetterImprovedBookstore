@@ -84,24 +84,23 @@ public class CD extends Item {
         return super.compareTo(item);
     }
 
-    @Override
-    public void useItem() {
-        System.out.println("You can now listen to " + this.getName());
+    public String useItem()
+    {
+        String message = "You can now listen to: ";
+        return message + this.getName();
     }
 
-/*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CD cd = (CD) o;
-        return Double.compare(cd.itemPrice, itemPrice) == 0 && Double.compare(cd.cdLength, cdLength) == 0 && cdID == cd.cdID && status == cd.status && Objects.equals(itemName, cd.itemName);
+        return Double.compare(cd.cdLength, cdLength) == 0 && status == cd.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), itemName, itemPrice, cdLength, cdID, status);
+        return Objects.hash(super.hashCode(), cdLength, status);
     }
- */
 }

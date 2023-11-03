@@ -1,8 +1,8 @@
 package Commands;
 import Commands.Items.*;
-import Commands.User.Cart;
-
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  *
  * @author skalg
@@ -13,12 +13,11 @@ public class Store {
     private final Register register = new Register();
     private static final Scanner scan = new Scanner(System.in);
     private static int itemIDTracker;
-    private ArrayList<Integer> dvdIDHistory = new ArrayList<>();
-    private ArrayList<Integer> cdIDHistory = new ArrayList<>();
-    private ArrayList<Integer> bookIDHistory = new ArrayList<>();
+    protected static ArrayList<Integer> dvdIDHistory = new ArrayList<>();
+    protected static ArrayList<Integer> cdIDHistory = new ArrayList<>();
+    protected static ArrayList<Integer> bookIDHistory = new ArrayList<>();
     private static int previousPurchasedProduct;
-    private static int previousProductType;
-    private final Cart cart = new Cart(this.inventory);
+    private static final AtomicInteger previousProductType = new AtomicInteger();
     private CD cd;
     private DVD dvd;
     private Book book;
@@ -65,13 +64,13 @@ public class Store {
                 inventory.availableItems(2);
                 int selectedBookID = scan.nextInt();
                 previousPurchasedProduct = (selectedBookID);
-                if(!this.bookIDHistory.contains(selectedBookID))
+                if(!bookIDHistory.contains(selectedBookID))
                 {
-                    this.bookIDHistory.add(selectedBookID);
+                    bookIDHistory.add(selectedBookID);
                 }
                 else break;
-                this.bookIDHistory.add(selectedBookID);
-                if (selectedBookID < 5 && selectedBookID > 0) {
+                bookIDHistory.add(selectedBookID);
+                if (selectedBookID < this.inventory.inStockItems.size() && selectedBookID > 0) {
                     this.register.proceedWithOrder();
                     double amountSpent = this.inventory.getBookPrice(selectedBookID);
                     this.register.handleBankInteraction(amountSpent, this.register.enter.getClient());
@@ -83,13 +82,13 @@ public class Store {
                 inventory.availableItems(1);
                 int selectedCDID = scan.nextInt();
                 previousPurchasedProduct = (selectedCDID);
-                if(!this.cdIDHistory.contains(selectedCDID))
+                if(!cdIDHistory.contains(selectedCDID))
                 {
-                    this.cdIDHistory.add(selectedCDID);
+                    cdIDHistory.add(selectedCDID);
                 }
                 else break;
-                this.cdIDHistory.add(selectedCDID);
-                if (selectedCDID < 5 && selectedCDID > 0) {
+                cdIDHistory.add(selectedCDID);
+                if (selectedCDID < this.inventory.inStockItems.size() && selectedCDID > 0) {
                     this.register.proceedWithOrder();
                     double amountSpent = this.inventory.getCDPrice(selectedCDID);
                     this.register.handleBankInteraction(amountSpent, this.register.enter.getClient());
@@ -99,14 +98,14 @@ public class Store {
             case 3 -> {
                 System.out.println("Which DVD? Select by ID ");
                 inventory.availableItems();
-                int selectedDVDID = scan.nextInt(3);
+                int selectedDVDID = scan.nextInt();
                 previousPurchasedProduct = (selectedDVDID);
-                if(!this.dvdIDHistory.contains(selectedDVDID))
+                if(!dvdIDHistory.contains(selectedDVDID))
                 {
-                    this.dvdIDHistory.add(selectedDVDID);
+                    dvdIDHistory.add(selectedDVDID);
                 }
                 else break;
-                if (selectedDVDID < 5 && selectedDVDID > 0) {
+                if (selectedDVDID < this.inventory.inStockItems.size() && selectedDVDID > 0) {
                     this.register.proceedWithOrder();
                     double amountSpent = this.inventory.getDVDPrice(selectedDVDID);
                     this.register.handleBankInteraction(amountSpent, this.register.enter.getClient());
@@ -138,7 +137,6 @@ public class Store {
                     return;
                 }
                 System.out.println(customerName + "'s order:");
-                this.cart.clearCart(true);
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
@@ -152,10 +150,9 @@ public class Store {
                         this.inventory.compareItems();
                         continue;
                     }
-                    previousProductType = itemIDTracker;
+                    previousProductType.set(itemIDTracker);
                     this.inventory.setSelectionID(itemIDTracker);
                     menu();
-                    // TODO-- this.cart.addToCart(inventory.findSpecifiedItem(previousProductType,previousPurchasedProduct));
                     System.out.println("\nWould you like to add another item to your cart? Type \"1\": ");
                     System.out.println("\nWould you like to compare two items by price? Type \"5\": ");
                     if (this.register.getPartyTotal() > 1) {
@@ -167,7 +164,7 @@ public class Store {
                     String cartChoice = scan.next();
 
                     if (cartChoice.equalsIgnoreCase("-1")) {
-                        displayItemActions();
+                        displayCart();
                         System.out.println("\nWould you like a refund? Type \"yes\" or \"no\"");
                         String refundOption = scan.next();
                         if (refundOption.equalsIgnoreCase("yes")) {
@@ -184,7 +181,7 @@ public class Store {
                         break;
                     }
                     else if (cartChoice.equalsIgnoreCase("2")) {
-                        displayItemActions();
+                        displayCart();
                         trackOrderAmount++;
                         break;
                     }
@@ -249,7 +246,7 @@ public class Store {
      * @param dvdIDHistory sets the list to hold the previously purchased DVD ID
      */
     public void setDvdIDHistory(ArrayList<Integer> dvdIDHistory) {
-        this.dvdIDHistory = dvdIDHistory;
+        Store.dvdIDHistory = dvdIDHistory;
     }
     /**
      *
@@ -264,7 +261,7 @@ public class Store {
      * @param cdIDHistory sets the list to hold the previously purchased CD ID
      */
     public void setCdIDHistory(ArrayList<Integer> cdIDHistory) {
-        this.cdIDHistory = cdIDHistory;
+        Store.cdIDHistory = cdIDHistory;
     }
     /**
      *
@@ -279,12 +276,20 @@ public class Store {
      * @param bookIDHistory sets the list to hold the previously purchased book ID
      */
     public void setBookIDHistory(ArrayList<Integer> bookIDHistory) {
-        this.bookIDHistory = bookIDHistory;
+        Store.bookIDHistory = bookIDHistory;
     }
-    public void displayItemActions()
+    public void displayCart()
     {
-        System.out.println("Before we move on, we wanted to tell you something");
-        System.out.println("You can now do this: ");
-        cart.displayItems();
+        displayItems();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
+    public void displayItems()
+    {
+        this.inventory.displayItems(this.getDvdIDHistory(),this.getCdIDHistory(),this.getBookIDHistory());
+    }
+
 }

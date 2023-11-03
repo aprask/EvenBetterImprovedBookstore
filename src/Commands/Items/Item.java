@@ -59,31 +59,29 @@ public abstract class Item implements Comparable {
     public String toString() {
         return "Item Name: " + getName() + "\nItem Price: " + getPrice();
     }
-    public void useItem()
+    public String useItem()
     {
-        System.out.println("You can now use " + this.name);
+        String message = "You can now use: ";
+        return message + this.name;
     }
-
-/*
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
-        return Double.compare(item.price, price) == 0 && ID == item.ID && Objects.equals(name, item.name) && Objects.equals(inventory, item.inventory);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, price, ID, inventory);
-    }
-
- */
     public boolean isStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Double.compare(item.price, price) == 0 && ID == item.ID && status == item.status && Objects.equals(name, item.name) && Objects.equals(inventory, item.inventory);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, ID, status, inventory);
     }
 }

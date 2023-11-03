@@ -86,25 +86,25 @@ public class DVD extends Item{
     }
 
     @Override
-    public void useItem() {
-        System.out.println("You can now watch " + this.getName());
+    public String useItem()
+    {
+        String message = "You can now watch: ";
+        return message + this.getName();
     }
 
-/*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         DVD dvd = (DVD) o;
-        return Double.compare(dvd.itemPrice, itemPrice) == 0 && Double.compare(dvd.dvdLength, dvdLength) == 0 && dvdID == dvd.dvdID && status == dvd.status && Objects.equals(itemName, dvd.itemName);
+        return Double.compare(dvd.dvdLength, dvdLength) == 0 && status == dvd.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), itemName, itemPrice, dvdLength, dvdID, status);
+        return Objects.hash(super.hashCode(), dvdLength, status);
     }
- */
 }
 
 

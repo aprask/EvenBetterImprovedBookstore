@@ -76,25 +76,24 @@ public class Book extends Item {
     public boolean compareTo(Item item) {
         return super.compareTo(item);
     }
-    @Override
-    public void useItem() {
-        System.out.println("You can now read " + this.getName());
+    public String useItem(String name)
+    {
+        String message = "You can now read: ";
+        return message + name;
     }
 
-/*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Book book = (Book) o;
-        return Double.compare(book.itemPrice, itemPrice) == 0 && pages == book.pages && bookID == book.bookID && status == book.status && Objects.equals(itemName, book.itemName);
+        return pages == book.pages && status == book.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), itemName, itemPrice, pages, bookID, status);
+        return Objects.hash(super.hashCode(), pages, status);
     }
- */
 }
 

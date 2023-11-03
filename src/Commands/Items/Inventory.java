@@ -167,6 +167,22 @@ import java.util.*;
             }
         }
     }
+    public void compareItems()
+    {
+        System.out.println();
+        for (Item stockItem : inStockItems) {
+            System.out.println("------------------------------------------------------");
+            System.out.println("Name: " + stockItem.getName());
+            System.out.println("ID: " + stockItem.getID());
+            System.out.println("------------------------------------------------------");
+        }
+        System.out.println("Select two items for comparison: ");
+        System.out.println("Item 1's ID: ");
+        int item1ID = scan.nextInt();
+        System.out.println("Item 2's ID: ");
+        int item2ID = scan.nextInt();
+        calculateCompare(item1ID,item2ID);
+    }
 
     public double totalCostOfBooks() {
         double total = 0;
@@ -264,20 +280,8 @@ import java.util.*;
         }
         return -1;
     }
-    public void compareItems()
+    public void calculateCompare(int item1ID, int item2ID)
     {
-        System.out.println();
-        for (Item stockItem : inStockItems) {
-            System.out.println("------------------------------------------------------");
-            System.out.println("Name: " + stockItem.getName());
-            System.out.println("ID: " + stockItem.getID());
-            System.out.println("------------------------------------------------------");
-        }
-        System.out.println("Select two items for comparison: ");
-        System.out.println("Item 1's ID: ");
-        int item1ID = scan.nextInt();
-        System.out.println("Item 2's ID: ");
-        int item2ID = scan.nextInt();
         for(int i = 0; i < inStockItems.size(); i++)
         {
             if(inStockItems.get(i).getID() == item1ID)
@@ -308,6 +312,59 @@ import java.util.*;
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    public Item returnItem(int previousProductID, int previousProductType)
+    {
+        if(previousProductType == 1)
+        {
+            for (Item inStockItem : inStockItems)
+            {
+                if (inStockItem != null && inStockItem.getID() == previousProductID) {
+                    return inStockItem;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void useItems(List<Item> itemsToUse)
+    {
+
+    }
+
+    public void displayItems(ArrayList<Integer> dvdIDHistory, ArrayList<Integer> cdIDHistory, ArrayList<Integer> bookIDHistory) {
+        System.out.println("Items in the cart:");
+        for (Item inStockItem : inStockItems) {
+            int compareID = inStockItem.getID();
+            for (Integer item : dvdIDHistory) {
+                if (compareID == item) {
+                    System.out.println("Name: " + inStockItems.get(compareID).getName());
+                    System.out.println("Price: " + inStockItems.get(compareID).getPrice());
+                    System.out.println(inStockItems.get(compareID).useItem());
+                    System.out.println();
+                    break;
+                }
+            }
+            for (Integer value : cdIDHistory) {
+                if (compareID == value) {
+                    System.out.println("Name: " + inStockItems.get(compareID).getName());
+                    System.out.println("Price: " + inStockItems.get(compareID).getPrice());
+                    System.out.println(inStockItems.get(compareID).useItem());
+                    System.out.println();
+                    break;
+                }
+            }
+            for (Integer integer : bookIDHistory) {
+                if (compareID == integer) {
+                    System.out.println("Name: " + inStockItems.get(compareID).getName());
+                    System.out.println("Price: " + inStockItems.get(compareID).getPrice());
+                    System.out.println(inStockItems.get(compareID).useItem());
+                    System.out.println();
+                    break;
                 }
             }
         }
